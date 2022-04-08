@@ -3,7 +3,7 @@ module.exports = function (app) {
     app.use(
         createProxyMiddleware("/api/**",
             {
-                target: process.env.PORT || "http://localhost:5000",
+                target: process.env.PORT,
                 headers: {
                     "Connection": "keep-alive"
                 }
