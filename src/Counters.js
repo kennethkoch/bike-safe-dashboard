@@ -20,19 +20,6 @@ const Counters = (props) => {
                                 </Card.Text>
                             </Card.Body>
                         </Card>
-                        {/* <br /> */}
-
-
-                        {/* <Card className='text-center' border="primary" style={{ width: '18rem' }}>
-                            <Card.Header>Cyclists Killed</Card.Header>
-                            <Card.Body>
-                                <Card.Title>10</Card.Title>
-                                <Card.Text>
-                                    +0
-                                </Card.Text>
-                            </Card.Body>
-                        </Card> */}
-                        {/* <br /> */}
 
                         <Card className='text-center' border="primary" style={{ width: '18rem' }}>
                             <Card.Header>Pedestrians</Card.Header>
@@ -43,18 +30,6 @@ const Counters = (props) => {
                                 </Card.Text>
                             </Card.Body>
                         </Card>
-                        {/* <br /> */}
-
-                        {/* <Card className='text-center' border="primary" style={{ width: '18rem' }}>
-                            <Card.Header>Pedestrians Killed</Card.Header>
-                            <Card.Body>
-                                <Card.Title>10</Card.Title>
-                                <Card.Text>
-                                    +0
-                                </Card.Text>
-                            </Card.Body>
-                        </Card> */}
-                        {/* <br /> */}
                     </CardGroup>
                 </Col>
             </Row>

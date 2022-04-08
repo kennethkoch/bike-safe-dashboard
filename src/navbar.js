@@ -4,7 +4,7 @@ function Nav() {
     return (
         <Navbar expand="lg" variant="light" bg="light">
             <Container>
-                <Navbar.Brand href="#">Navbar</Navbar.Brand>
+                <Navbar.Brand href="#">NYC Cyclist and Pedestrian Safety Dashboard</Navbar.Brand>
             </Container>
         </Navbar>
     )
