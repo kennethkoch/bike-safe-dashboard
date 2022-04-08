@@ -18,11 +18,12 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "concurrently \"cd backend && flask run --no-debugger\" \"react-scripts start\"",
+    "start": "react-scripts start",
     "start-backend": "cd backend && flask run --no-debugger",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "heroku-postbuild": "cd backend && flask run --no-debugger"
   },
   "eslintConfig": {
     "extends": [
