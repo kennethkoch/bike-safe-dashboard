@@ -1,2 +1,2 @@
 web: npm start
-web: npm run start-backend
+worker: npm run start-backend
