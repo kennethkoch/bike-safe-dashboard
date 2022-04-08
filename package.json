@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "bootstrap": "^5.1.3",
     "chart.js": "^3.7.1",
+    "concurrently": "^7.1.0",
     "http-proxy-middleware": "^2.0.4",
     "react": "^17.0.2",
     "react-bootstrap": "^2.2.2",
@@ -17,7 +18,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"cd backend && flask run --no-debugger\" \"react-scripts start\"",
     "start-backend": "cd backend && flask run --no-debugger",
     "build": "react-scripts build",
     "test": "react-scripts test",
