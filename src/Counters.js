@@ -12,7 +12,7 @@ const Counters = (props) => {
                 <Col>
                     <CardGroup>
                         <Card className='text-center' border="primary" style={{ width: '18rem' }}>
-                            <Card.Header>Cyclists</Card.Header>
+                            <Card.Header>Cyclists (YTD)</Card.Header>
                             <Card.Body>
                                 <Card.Title>Injuries: {props.counterData.ytdCyclistInjuries}</Card.Title>
                                 <Card.Text>
@@ -22,7 +22,7 @@ const Counters = (props) => {
                         </Card>
 
                         <Card className='text-center' border="primary" style={{ width: '18rem' }}>
-                            <Card.Header>Pedestrians</Card.Header>
+                            <Card.Header>Pedestrians (YTD)</Card.Header>
                             <Card.Body>
                                 <Card.Title>Injuries: {props.counterData.ytdPedestrianInjuries}</Card.Title>
                                 <Card.Text>
