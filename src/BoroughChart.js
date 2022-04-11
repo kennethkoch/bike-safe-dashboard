@@ -62,6 +62,7 @@ const BoroughChart = (props) => {
 
     return (
         <Container>
+            <h3 className='text-center'>Serious Accidents per Borough</h3>
             <Row>
                 <Col>
                     <h3 className='text-center'>Cyclists</h3>
@@ -74,6 +75,8 @@ const BoroughChart = (props) => {
                 </Col>
 
             </Row>
+            <br></br>
+            <br></br>
         </Container>
     )
 }

@@ -31,7 +31,7 @@ const YearlyChart = (props) => {
             },
             title: {
                 display: true,
-                text: 'Yearly Incidents',
+                text: 'Accidents Involving Injuries per Year',
             },
         },
     };
@@ -57,7 +57,10 @@ const YearlyChart = (props) => {
     };
     return (
         <Container>
+            <h3 className='text-center'>Yearly Totals</h3>
             <Bar options={options} data={data} />
+            <br></br>
+            <br></br>
         </Container>
     )
 }

@@ -63,7 +63,10 @@ const WeekdayChart = (props) => {
 
     return (
         <Container>
+            <h3 className='text-center'>Weekly Totals</h3>
             <Bar options={options} data={data} />
+            <br></br>
+            <br></br>
         </Container>
     )
 }

@@ -33,7 +33,7 @@ const HourChart = (props) => {
             },
             title: {
                 display: true,
-                text: 'Incidents By Hour',
+                text: 'Accidents Involving Injury Grouped by Hour',
             },
         },
     };
@@ -64,6 +64,7 @@ const HourChart = (props) => {
 
     return (
         <Container>
+            <h3 className='text-center'>Hourly Totals</h3>
             <Line options={options} data={data} />;
         </Container>
     )

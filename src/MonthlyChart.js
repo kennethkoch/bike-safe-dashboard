@@ -32,7 +32,7 @@ const MonthlyChart = (props) => {
             },
             title: {
                 display: true,
-                text: 'Monthly Average Incidents',
+                text: 'Average Accidents Involving Injuries per Month',
             },
         },
     };
@@ -58,7 +58,10 @@ const MonthlyChart = (props) => {
 
     return (
         <Container>
+            <h3 className='text-center'>Monthly Averages</h3>
             <Bar options={options} data={data} />
+            <br></br>
+            <br></br>
         </Container>
     )
 }
