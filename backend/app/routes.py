@@ -1,8 +1,8 @@
 from urllib import response
-from app import app, function_test
+from app import app, data
 
 
-data = function_test.data
+data = data.data
 
 
 @app.route("/api")
