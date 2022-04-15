@@ -25,13 +25,56 @@ const YearlyChart = (props) => {
 
     const options = {
         responsive: true,
+        scales: {
+            x: {
+                display: true,
+                title: {
+                    display: true,
+                    text: 'Year',
+                    color: '#ECF0F1',
+                    font: {
+                        size: 16
+                    }
+
+                },
+                ticks: {
+                    color: "#ECF0F1",
+                    font: {
+                        size: 12
+                    }
+                }
+            },
+            y: {
+                display: true,
+                title: {
+                    display: true,
+                    text: 'Accidents',
+                    color: '#ECF0F1',
+                    font: {
+                        size: 16
+                    }
+                },
+                ticks: {
+                    color: "#ECF0F1",
+                    font: {
+                        size: 12
+                    }
+                }
+            }
+        },
         plugins: {
             legend: {
-                position: 'bottom'
+                display: true,
+                position: 'right',
+                color: '#ECF0F1',
+                labels: {
+                    color: '#ECF0F1',
+                }
             },
             title: {
                 display: true,
                 text: 'Accidents Involving Injuries per Year',
+                color: '#ECF0F1'
             },
         },
     };
@@ -45,13 +88,13 @@ const YearlyChart = (props) => {
                 label: 'Cyclists',
                 data: props.yearlyData.yearlyCyclistTotals,
                 borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                backgroundColor: '#2ECC71',
             },
             {
                 label: 'Pedestrians',
                 data: props.yearlyData.yearlyPedestrianTotals,
-                borderColor: 'rgb(53, 162, 235)',
-                backgroundColor: 'rgba(53, 162, 235, 0.5)',
+                borderColor: '#E74C3C',
+                backgroundColor: '#3498DB',
             },
         ],
     };

@@ -1,4 +1,4 @@
-import './App.css';
+// import './App.css';
 import { useEffect, useState } from 'react';
 import Navbar from './navbar'
 import Counters from './Counters'

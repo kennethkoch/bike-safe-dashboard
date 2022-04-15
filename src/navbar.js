@@ -2,9 +2,9 @@ import Navbar from 'react-bootstrap/Navbar'
 import Container from 'react-bootstrap/Container'
 function Nav() {
     return (
-        <Navbar expand="lg" variant="light" bg="light">
+        <Navbar expand="lg"  >
             <Container>
-                <Navbar.Brand href="#">NYC Cyclist and Pedestrian Safety Dashboard</Navbar.Brand>
+                <Navbar.Brand className='mx-auto' id='nav-title' href="#">NYC Cyclist and Pedestrian Safety Dashboard</Navbar.Brand>
             </Container>
         </Navbar>
     )
