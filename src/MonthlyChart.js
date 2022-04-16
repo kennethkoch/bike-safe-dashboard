@@ -117,7 +117,7 @@ const MonthlyChart = (props) => {
 
     return (
         <Container>
-            <h3 className='text-center'>Monthly Averages</h3>
+            <h3 className='text-center'>Average Monthly Accidents</h3>
             <Line options={options} data={data} />
             <br></br>
             <br></br>

@@ -7,6 +7,7 @@ import {
     Title,
     Tooltip,
     Legend,
+    LogarithmicScale,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { Container, Row, Col } from 'react-bootstrap';
@@ -55,7 +56,6 @@ const WeekdayChart = (props) => {
         scales: {
             x: {
                 display: true,
-                stacked: true,
                 title: {
                     display: true,
                     text: 'Day of the Week',
@@ -74,7 +74,6 @@ const WeekdayChart = (props) => {
             },
             y: {
                 display: true,
-                stacked: true,
                 title: {
                     display: true,
                     text: 'Accidents',
