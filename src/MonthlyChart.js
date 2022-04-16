@@ -26,13 +26,56 @@ const MonthlyChart = (props) => {
 
     const options = {
         responsive: true,
+        scales: {
+            x: {
+                display: true,
+                title: {
+                    display: true,
+                    text: 'Month',
+                    color: '#ECF0F1',
+                    font: {
+                        size: 20
+                    }
+
+                },
+                ticks: {
+                    color: "#ECF0F1",
+                    font: {
+                        size: 16
+                    }
+                }
+            },
+            y: {
+                display: true,
+                title: {
+                    display: true,
+                    text: 'Accidents',
+                    color: '#ECF0F1',
+                    font: {
+                        size: 20
+                    }
+                },
+                ticks: {
+                    color: "#ECF0F1",
+                    font: {
+                        size: 16
+                    }
+                }
+            }
+        },
         plugins: {
             legend: {
-                position: 'top'
+                display: true,
+                position: 'right',
+                title: 'test',
+                labels: {
+                    color: '#ECF0F1',
+                }
             },
             title: {
                 display: true,
                 text: 'Average Accidents Involving Injuries per Month',
+                color: '#BDBDBD'
             },
         },
     };

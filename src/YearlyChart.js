@@ -33,14 +33,14 @@ const YearlyChart = (props) => {
                     text: 'Year',
                     color: '#ECF0F1',
                     font: {
-                        size: 16
+                        size: 20
                     }
 
                 },
                 ticks: {
                     color: "#ECF0F1",
                     font: {
-                        size: 12
+                        size: 16
                     }
                 }
             },
@@ -51,13 +51,13 @@ const YearlyChart = (props) => {
                     text: 'Accidents',
                     color: '#ECF0F1',
                     font: {
-                        size: 16
+                        size: 20
                     }
                 },
                 ticks: {
                     color: "#ECF0F1",
                     font: {
-                        size: 12
+                        size: 16
                     }
                 }
             }
@@ -74,12 +74,12 @@ const YearlyChart = (props) => {
             title: {
                 display: true,
                 text: 'Accidents Involving Injuries per Year',
-                color: '#ECF0F1'
+                color: '#BDBDBD'
             },
         },
     };
 
-    const labels = ['2012*(Jul-Dec)', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022 (YTD)'];
+    const labels = ['2012*(Jul-Dec)', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022'];
 
     const data = {
         labels,

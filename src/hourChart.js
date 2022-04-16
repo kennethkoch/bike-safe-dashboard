@@ -27,13 +27,54 @@ const HourChart = (props) => {
 
     const options = {
         responsive: true,
+        scales: {
+            x: {
+                display: true,
+                title: {
+                    display: true,
+                    text: 'Hour of Accident',
+                    color: '#ECF0F1',
+                    font: {
+                        size: 20
+                    }
+
+                },
+                ticks: {
+                    color: "#ECF0F1",
+                    font: {
+                        size: 14
+                    }
+                }
+            },
+            y: {
+                display: true,
+                title: {
+                    display: true,
+                    text: 'Accidents',
+                    color: '#ECF0F1',
+                    font: {
+                        size: 20
+                    }
+                },
+                ticks: {
+                    color: "#ECF0F1",
+                    font: {
+                        size: 16
+                    }
+                }
+            }
+        },
         plugins: {
             legend: {
-                position: 'bottom'
+                position: 'bottom',
+                labels: {
+                    color: '#ECF0F1',
+                }
             },
             title: {
                 display: true,
                 text: 'Accidents Involving Injury Grouped by Hour',
+                color: '#BDBDBD'
             },
         },
     };
