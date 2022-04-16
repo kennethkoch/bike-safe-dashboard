@@ -3,12 +3,14 @@ import {
     Chart as ChartJS,
     CategoryScale,
     LinearScale,
-    BarElement,
+    // BarElement,
+    PointElement,
+    LineElement,
     Title,
     Tooltip,
     Legend,
 } from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 import { Container, Row, Col } from 'react-bootstrap';
 
 
@@ -16,7 +18,9 @@ import { Container, Row, Col } from 'react-bootstrap';
 ChartJS.register(
     CategoryScale,
     LinearScale,
-    BarElement,
+    // BarElement,
+    PointElement,
+    LineElement,
     Title,
     Tooltip,
     Legend
@@ -99,11 +103,13 @@ const MonthlyChart = (props) => {
             {
                 label: 'Cyclists',
                 data: props.monthlyData.monthlyCyclistAverages,
+                borderColor: '#27AE60',
                 backgroundColor: '#2ECC71',
             },
             {
                 label: 'Pedestrians',
                 data: props.monthlyData.monthlyPedestrianAverages,
+                borderColor: '#2980B9',
                 backgroundColor: '#3498DB',
             },
         ],
@@ -112,7 +118,7 @@ const MonthlyChart = (props) => {
     return (
         <Container>
             <h3 className='text-center'>Monthly Averages</h3>
-            <Bar options={options} data={data} />
+            <Line options={options} data={data} />
             <br></br>
             <br></br>
         </Container>
