@@ -50,21 +50,21 @@ const HourChart = (props) => {
             {
                 label: 'Cyclists',
                 data: props.hourlyData.hourlyCyclistTotals,
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                borderColor: '#27AE60',
+                backgroundColor: '#2ECC71',
             },
             {
                 label: 'Pedestrians',
                 data: props.hourlyData.hourlyPedestrianTotals,
-                borderColor: 'rgb(53, 162, 235)',
-                backgroundColor: 'rgba(53, 162, 235, 0.5)',
+                borderColor: '#2980B9',
+                backgroundColor: '#3498DB',
             },
         ],
     };
 
     return (
         <Container>
-            <h3 className='text-center'>Hourly Totals</h3>
+            <h3 className='text-center'>Accidents by Hour</h3>
             <Line options={options} data={data} />;
         </Container>
     )

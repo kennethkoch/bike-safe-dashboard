@@ -46,12 +46,12 @@ const MonthlyChart = (props) => {
             {
                 label: 'Cyclists',
                 data: props.monthlyData.monthlyCyclistAverages,
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                backgroundColor: '#2ECC71',
             },
             {
                 label: 'Pedestrians',
                 data: props.monthlyData.monthlyPedestrianAverages,
-                backgroundColor: 'rgba(53, 162, 235, 0.5)',
+                backgroundColor: '#3498DB',
             },
         ],
     };

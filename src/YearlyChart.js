@@ -87,13 +87,13 @@ const YearlyChart = (props) => {
             {
                 label: 'Cyclists',
                 data: props.yearlyData.yearlyCyclistTotals,
-                borderColor: 'rgb(255, 99, 132)',
+                borderColor: '#27AE60',
                 backgroundColor: '#2ECC71',
             },
             {
                 label: 'Pedestrians',
                 data: props.yearlyData.yearlyPedestrianTotals,
-                borderColor: '#E74C3C',
+                borderColor: '#2980B9',
                 backgroundColor: '#3498DB',
             },
         ],
