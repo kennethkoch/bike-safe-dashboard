@@ -29,14 +29,24 @@ const WeekdayChart = (props) => {
         plugins: {
             legend: {
                 display: true,
-                position: 'right',
-                title: 'test',
+                position: 'top',
                 labels: {
                     color: '#ECF0F1',
-                }
+                    font: {
+                        size: 17,
+                        weight: 500,
+
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'Click Category to Show/Hide Data',
+                    color: '#ECF0F1',
+                },
             },
             title: {
                 display: true,
+                padding: 18,
                 text: 'Accidents Involving Injury Grouped by Day of the Week',
                 color: '#BDBDBD'
             },
