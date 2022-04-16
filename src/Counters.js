@@ -11,10 +11,10 @@ const Counters = (props) => {
             <Row>
                 <Col>
                     <br></br>
-                    <h3 className='text-center'>Year to Date Totals</h3>
+                    <h3 className='text-center'>Year to Date Injury Tracker</h3>
                     <CardGroup>
-                        <Card className='text-center' border="primary" style={{ width: '18rem' }}>
-                            <Card.Header>Cyclists (YTD)</Card.Header>
+                        <Card id='cyclist-card' className='text-center' style={{ width: '18rem' }}>
+                            <Card.Header>Cyclists</Card.Header>
                             <Card.Body>
                                 <Card.Title>Injuries: {props.counterData.ytdCyclistInjuries}</Card.Title>
                                 <Card.Text>
@@ -23,8 +23,8 @@ const Counters = (props) => {
                             </Card.Body>
                         </Card>
 
-                        <Card className='text-center' border="primary" style={{ width: '18rem' }}>
-                            <Card.Header>Pedestrians (YTD)</Card.Header>
+                        <Card id='pedestrian-card' className='text-center' style={{ width: '18rem' }}>
+                            <Card.Header>Pedestrians</Card.Header>
                             <Card.Body>
                                 <Card.Title>Injuries: {props.counterData.ytdPedestrianInjuries}</Card.Title>
                                 <Card.Text>
