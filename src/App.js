@@ -35,10 +35,10 @@ function App() {
         <Navbar />
         <Counters counterData={data.counterData} />
         <YearlyChart yearlyData={data.yearlyData} />
-        <BoroughChart boroughData={data.boroughData} />
-        <WeekdayChart weeklyData={data.weeklyData} />
         <MonthlyChart monthlyData={data.monthlyData} />
+        <WeekdayChart weeklyData={data.weeklyData} />
         <HourChart hourlyData={data.hourlyData} />
+        <BoroughChart boroughData={data.boroughData} />
       </div>
   );
 }
