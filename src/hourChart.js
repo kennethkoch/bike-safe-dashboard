@@ -30,6 +30,9 @@ const HourChart = (props) => {
         scales: {
             x: {
                 display: true,
+                grid: {
+                    color: '#607D8B'
+                },
                 title: {
                     display: true,
                     text: 'Hour of Accident',
@@ -48,6 +51,9 @@ const HourChart = (props) => {
             },
             y: {
                 display: true,
+                grid: {
+                    color: '#607D8B'
+                },
                 title: {
                     display: true,
                     text: 'Accidents',

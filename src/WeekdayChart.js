@@ -56,6 +56,9 @@ const WeekdayChart = (props) => {
         scales: {
             x: {
                 display: true,
+                grid: {
+                    color: '#78909C'
+                },
                 title: {
                     display: true,
                     text: 'Day of the Week',
@@ -74,6 +77,9 @@ const WeekdayChart = (props) => {
             },
             y: {
                 display: true,
+                grid: {
+                    color: '#78909C'
+                },
                 title: {
                     display: true,
                     text: 'Accidents',

@@ -33,6 +33,9 @@ const MonthlyChart = (props) => {
         scales: {
             x: {
                 display: true,
+                grid: {
+                    color: '#607D8B'
+                },
                 title: {
                     display: true,
                     text: 'Month',
@@ -51,6 +54,9 @@ const MonthlyChart = (props) => {
             },
             y: {
                 display: true,
+                grid: {
+                    color: '#607D8B'
+                },
                 title: {
                     display: true,
                     text: 'Accidents',

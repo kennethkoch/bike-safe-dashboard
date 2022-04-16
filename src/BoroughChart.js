@@ -25,6 +25,9 @@ const BoroughChart = (props) => {
         scales: {
             x: {
                 display: true,
+                grid: {
+                    color: '#78909C'
+                },
                 title: {
                     display: true,
                     text: 'Accidents',
@@ -43,6 +46,9 @@ const BoroughChart = (props) => {
             },
             y: {
                 display: true,
+                grid: {
+                    color: '#78909C'
+                },
                 title: {
                     display: true,
                     text: 'Borough',
@@ -106,81 +112,11 @@ const BoroughChart = (props) => {
             },
         ],
     };
-    // const cyclistData = {
-    //     plugins: {
-    //         legend: {
-    //             display: true,
-    //             position: 'top',
-    //             color: '#ECF0F1',
-    //             title: {
-    //                 display: true,
-    //                 text: 'Click Category to Show/Hide Data',
-    //                 color: '#ECF0F1',
-    //             },
-    //             labels: {
-    //                 color: '#ECF0F1',
-    //                 font: {
-    //                     size: 17,
-    //                     weight: 500,
-
-    //                 }
-    //             }
-    //         },
-    //     },
-    //     labels: ['Bronx', 'Brooklyn', 'Manhattan', 'Queens', 'Staten Island', 'Unknown/Other'],
-    //     datasets: [
-    //         {
-    //             label: '# of Incidents',
-    //             data: props.boroughData.cyclistBoroughTotals,
-    //             backgroundColor: [
-    //                 '#C62828',
-    //                 '#0050EF',
-    //                 '#4CAF50',
-    //                 '#FFAB00',
-    //                 '#AA00FF',
-    //                 '#9E9E9E',
-    //             ],
-    //             borderColor: '#16A085',
-    //             borderWidth: 3,
-    //         },
-    //     ],
-    // };
-    // const pedestrianData = {
-    //     labels: ['Bronx', 'Brooklyn', 'Manhattan', 'Queens', 'Staten Island', 'Unknown/Other'],
-    //     datasets: [
-    //         {
-    //             label: '# of Incidents',
-    //             data: props.boroughData.pedestrianBoroughTotals,
-    //             backgroundColor: [
-    //                 '#C62828',
-    //                 '#0050EF',
-    //                 '#4CAF50',
-    //                 '#FFAB00',
-    //                 '#AA00FF',
-    //                 '#9E9E9E',
-    //             ],
-    //             borderColor: '#2980B9',
-    //             borderWidth: 3,
-    //         },
-    //     ],
-    // };
 
     return (
         <Container>
             <h3 className='text-center'>Accidents by Borough</h3>
             <Bar options={options} data={data} />
-            {/* <Row>
-                <Col>
-                    <h3 className='text-center'>Cyclists</h3>
-                    <Pie data={cyclistData} />
-
-                </Col>
-                <Col>
-                    <h3 className='text-center'>Pedestrians</h3>
-                    <Pie data={pedestrianData} />
-                </Col>
-
-            </Row> */}
             <br></br>
             <br></br>
         </Container>

@@ -28,6 +28,9 @@ const YearlyChart = (props) => {
         scales: {
             x: {
                 display: true,
+                grid: {
+                    color: '#78909C'
+                },
                 title: {
                     display: true,
                     text: 'Year',
@@ -46,6 +49,9 @@ const YearlyChart = (props) => {
             },
             y: {
                 display: true,
+                grid: {
+                    color: '#78909C'
+                },
                 title: {
                     display: true,
                     text: 'Accidents',
