@@ -7,6 +7,7 @@ import WeekdayChart from './WeekdayChart'
 import YearlyChart from './YearlyChart'
 import MonthlyChart from './MonthlyChart'
 import HourChart from './hourChart'
+import Footer from './Footer'
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
         <WeekdayChart weeklyData={data.weeklyData} />
         <HourChart hourlyData={data.hourlyData} />
         <BoroughChart boroughData={data.boroughData} />
+        <Footer />
       </div>
   );
 }

@@ -74,3 +74,23 @@ nav {
 h3 {
   color: #ECF0F1
 }
+
+#footer {
+  background-color: #2d3436;
+  /* min-height: 10vh; */
+  color: #78909C;
+  font-size: 1.3em;
+}
+
+#footer .row {
+  min-height: 2em;
+  align-content: center;
+}
+
+#footer a {
+  color: #78909C
+}
+
+#footer a:hover {
+  color: #74b9ff
+}
