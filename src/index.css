@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
 }
 
 code {
@@ -74,6 +75,7 @@ nav {
 h3 {
   color: #ECF0F1
 }
+
 
 #footer {
   background-color: #2d3436;

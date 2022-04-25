@@ -7,11 +7,10 @@ import {
     Title,
     Tooltip,
     Legend,
-    LogarithmicScale,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { Container, Row, Col } from 'react-bootstrap';
-import { propTypes } from 'react-bootstrap/esm/Image';
+
 
 
 
@@ -105,13 +104,13 @@ const WeekdayChart = (props) => {
         datasets: [
             {
                 label: 'Cyclists',
-                data: props.weeklyData.weeklyCyclistTotals,
+                data: props.isLoading ? {} : props.weeklyData.weeklyCyclistTotals,
                 borderColor: '#27AE60',
                 backgroundColor: '#2ECC71',
             },
             {
                 label: 'Pedestrians',
-                data: props.weeklyData.weeklyPedestrianTotals,
+                data: props.isLoading ? {} : props.weeklyData.weeklyPedestrianTotals,
                 borderColor: '#2980B9',
                 backgroundColor: '#3498DB',
             },

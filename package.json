@@ -20,6 +20,7 @@
   },
   "scripts": {
     "start": "concurrently \"cd backend && flask run --no-debugger\" \"react-scripts start\"",
+    "start-frontend": "react-scripts start",
     "start-backend": "cd backend && flask run --no-debugger",
     "build": "react-scripts build",
     "test": "react-scripts test",

@@ -4,8 +4,6 @@ import { CardGroup, Col, Row } from 'react-bootstrap'
 import { useState } from 'react'
 
 const Counters = (props) => {
-    console.log(props)
-
     return (
         <Container>
             <Row>
@@ -16,9 +14,9 @@ const Counters = (props) => {
                         <Card id='cyclist-card' className='text-center' style={{ width: '18rem' }}>
                             <Card.Header>Cyclists</Card.Header>
                             <Card.Body>
-                                <Card.Title>Injuries: {props.counterData.ytdCyclistInjuries}</Card.Title>
+                                <Card.Title>Injuries: {props.isLoading ? 0 : props.counterData.ytdCyclistInjuries}</Card.Title>
                                 <Card.Text>
-                                    Deaths: {props.counterData.ytdCyclistDeaths}
+                                    Deaths: {props.isLoading ? 0 : props.counterData.ytdCyclistDeaths}
                                 </Card.Text>
                             </Card.Body>
                         </Card>
@@ -26,9 +24,9 @@ const Counters = (props) => {
                         <Card id='pedestrian-card' className='text-center' style={{ width: '18rem' }}>
                             <Card.Header>Pedestrians</Card.Header>
                             <Card.Body>
-                                <Card.Title>Injuries: {props.counterData.ytdPedestrianInjuries}</Card.Title>
+                                <Card.Title>Injuries: {props.isLoading ? 0 : props.counterData.ytdPedestrianInjuries}</Card.Title>
                                 <Card.Text>
-                                    Deaths: {props.counterData.ytdPedestrianDeaths}
+                                    Deaths: {props.isLoading ? 0 : props.counterData.ytdPedestrianDeaths}
                                 </Card.Text>
                             </Card.Body>
                         </Card>

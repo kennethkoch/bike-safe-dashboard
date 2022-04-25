@@ -107,13 +107,13 @@ const HourChart = (props) => {
         datasets: [
             {
                 label: 'Cyclists',
-                data: props.hourlyData.hourlyCyclistTotals,
+                data: props.isLoading ? {} : props.hourlyData.hourlyCyclistTotals,
                 borderColor: '#27AE60',
                 backgroundColor: '#2ECC71',
             },
             {
                 label: 'Pedestrians',
-                data: props.hourlyData.hourlyPedestrianTotals,
+                data: props.isLoading ? {} : props.hourlyData.hourlyPedestrianTotals,
                 borderColor: '#2980B9',
                 backgroundColor: '#3498DB',
             },

@@ -28,20 +28,19 @@ function App() {
       .catch(error => console.log(error))
 
   }, [])
-  console.log(data)
+
 
   return (
-    isLoading ? <h1>Loading......</h1> :
-      <div>
-        <Navbar />
-        <Counters counterData={data.counterData} />
-        <YearlyChart yearlyData={data.yearlyData} />
-        <MonthlyChart monthlyData={data.monthlyData} />
-        <WeekdayChart weeklyData={data.weeklyData} />
-        <HourChart hourlyData={data.hourlyData} />
-        <BoroughChart boroughData={data.boroughData} />
-        <Footer />
-      </div>
+    <div>
+      <Navbar />
+      <Counters isLoading={isLoading} counterData={data.counterData} />
+      <YearlyChart isLoading={isLoading} yearlyData={data.yearlyData} />
+      <MonthlyChart isLoading={isLoading} monthlyData={data.monthlyData} />
+      <WeekdayChart isLoading={isLoading} weeklyData={data.weeklyData} />
+      <HourChart isLoading={isLoading} hourlyData={data.hourlyData} />
+      <BoroughChart isLoading={isLoading} boroughData={data.boroughData} />
+      <Footer />
+    </div>
   );
 }
 
