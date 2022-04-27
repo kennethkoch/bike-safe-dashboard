@@ -1,6 +1,6 @@
 # bike-safe-dashboard
 
-[Click here for Demo](https://bike-safe-dashboard.herokuapp.com/)
+[Click here to view demo](https://bike-safe-dashboard.herokuapp.com/)  
 This is a data visualization project created to explore trends in cyclist and pedestrian safety in NYC
 
 ## Data
