@@ -9,7 +9,7 @@ function Footer() {
             <Row>
                 <Col id='left-footer-item'>
                     Data sourced from <a href='https://opendata.cityofnewyork.us/'>NYC Open Data</a></Col>
-                <Col id='right-footer-item'> <a href='#'>View on GitHub <BsGithub /></a></Col>
+                <Col id='right-footer-item'> <a href='https://github.com/kennethkoch/bike-safe-dashboard'>View on GitHub <BsGithub /></a></Col>
             </Row>
         </Container>
 
