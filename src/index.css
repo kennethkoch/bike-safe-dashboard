@@ -18,9 +18,9 @@ code {
   background-color: #34495E;
 }
 
-.container {
+/* .container {
   background-color: #34495E;
-}
+} */
 
 div.card {
   border: 2px solid #78909C;
@@ -62,9 +62,21 @@ div.card-body {
   background-color: #01579B;
 }
 
-.navbar .container {
+/* .navbar .container {
   background-color: #2d3436;
+  color: #B2DFDB;
+} */
+
+
+.nav-link {
+  /* color: #B2DFDB !important; */
+  font-size: 1.4em;
 }
+
+/* .nav-link:hover {
+  color: #d8d8d8 !important;
+  font-size: 1.4em;
+} */
 
 .navbar {
   background-color: #2d3436;
@@ -77,9 +89,18 @@ div.card-body {
   font-size: 2.2em;
 }
 
-h3 {
-  color: #ECF0F1
+/* .dropdown-menu {
+  background-color: #2d3436 !important;
+  color: #B2DFDB !important;
 }
+
+.dropdown-item {
+  color: #B2DFDB !important;
+}
+
+.dropdown-item:hover {
+  color: #2d3436 !important;
+} */
 
 
 #footer {
