@@ -24,7 +24,8 @@ ChartJS.register(
 );
 
 const HourChart = (props) => {
-
+    const worstCyclistTime = 'N/A';
+    const worstPedestrianTime = 'N/A';
     const options = {
         responsive: true,
         scales: {
@@ -123,6 +124,10 @@ const HourChart = (props) => {
     return (
         <Container>
             <h3 className='text-center'>Accidents by Hour</h3>
+            <h4 className='text-center'>
+                The most dangerous time of day for cyclists is <span style={{ fontWeight: 'bold', color: '#BDBDBD' }}>{worstCyclistTime}</span>, <br></br>
+                and the most dangerous time of day for pedestrians is <span style={{ fontWeight: 'bold', color: '#BDBDBD' }}>{worstPedestrianTime}.</span>.
+            </h4>
             <Line options={options} data={data} />;
         </Container>
     )

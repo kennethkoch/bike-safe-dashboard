@@ -18,7 +18,8 @@ ChartJS.register(CategoryScale,
     Legend);
 
 const BoroughChart = (props) => {
-
+    const worstCyclistBorough = 'N/A';
+    const worstPedestrianBorough = 'N/A';
     const options = {
         indexAxis: 'y',
         responsive: true,
@@ -116,6 +117,8 @@ const BoroughChart = (props) => {
     return (
         <Container>
             <h3 className='text-center'>Accidents by Borough</h3>
+            <h4 className='text-center'><span style={{ fontWeight: 'bold', color: '#BDBDBD' }}>{worstCyclistBorough}</span> has had the most cyclist accidents of any borough,<br></br>
+                while <span style={{ fontWeight: 'bold', color: '#BDBDBD' }}>{worstPedestrianBorough}</span> has had the most pedestrian accidents.</h4>
             <Bar options={options} data={data} />
             <br></br>
             <br></br>

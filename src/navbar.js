@@ -11,11 +11,11 @@ function Navigation() {
                     <Nav className="ml-auto">
                         <Nav.Link href="#">Map</Nav.Link>
                         <NavDropdown bg='dark' menuVariant='dark' title="Statistics" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="#">Item 1</NavDropdown.Item>
-                            <NavDropdown.Item href="#">Item 2</NavDropdown.Item>
-                            <NavDropdown.Item href="#">Item 3</NavDropdown.Item>
-                            <NavDropdown.Item href="#">Item 4</NavDropdown.Item>
-                            <NavDropdown.Item href="#">Item 5</NavDropdown.Item>
+                            <NavDropdown.Item href="#">Yearly</NavDropdown.Item>
+                            <NavDropdown.Item href="#">Monthly</NavDropdown.Item>
+                            <NavDropdown.Item href="#">Daily</NavDropdown.Item>
+                            <NavDropdown.Item href="#">Hourly</NavDropdown.Item>
+                            <NavDropdown.Item href="#">Borough</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>
