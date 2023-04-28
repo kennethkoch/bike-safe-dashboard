@@ -74,7 +74,7 @@ const BoroughChart = (props) => {
                 title: {
                     display: true,
                     text: 'Click Category to Show/Hide Data',
-                    color: '#ECF0F1',
+                    color: '#BDBDBD',
                 },
                 labels: {
                     color: '#ECF0F1',
@@ -84,12 +84,6 @@ const BoroughChart = (props) => {
 
                     }
                 }
-            },
-            title: {
-                display: true,
-                padding: 18,
-                text: 'Accidents Involving Injuries Grouped by Borough',
-                color: '#BDBDBD'
             },
         },
     };
@@ -117,8 +111,8 @@ const BoroughChart = (props) => {
     return (
         <Container>
             <h3 className='text-center'>Accidents by Borough</h3>
-            <h4 className='text-center'><span style={{ fontWeight: 'bold', color: '#BDBDBD' }}>{worstCyclistBorough}</span> has had the most cyclist accidents of any borough,<br></br>
-                while <span style={{ fontWeight: 'bold', color: '#BDBDBD' }}>{worstPedestrianBorough}</span> has had the most pedestrian accidents.</h4>
+            <h4 className='text-center'><span style={{ fontWeight: 'bold', color: '#cef5ea' }}>{worstCyclistBorough}</span> has had the most cyclist accidents of any borough,<br></br>
+                while <span style={{ fontWeight: 'bold', color: '#c0d2fc' }}>{worstPedestrianBorough}</span> has had the most pedestrian accidents.</h4>
             <Bar options={options} data={data} />
             <br></br>
             <br></br>

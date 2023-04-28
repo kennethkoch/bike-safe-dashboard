@@ -89,14 +89,8 @@ const MonthlyChart = (props) => {
                 title: {
                     display: true,
                     text: 'Click Category to Show/Hide Data',
-                    color: '#ECF0F1',
+                    color: '#BDBDBD',
                 },
-            },
-            title: {
-                display: true,
-                padding: 18,
-                text: 'Average Accidents Involving Injuries per Month',
-                color: '#BDBDBD'
             },
         },
     };
@@ -126,8 +120,8 @@ const MonthlyChart = (props) => {
         <Container>
             <h3 className='text-center'>Average Monthly Accidents</h3>
             <h4 className='text-center'>The most dangerous month for cyclists has historically
-                been <span style={{ fontWeight: 'bold', color: '#BDBDBD' }}>{worstCyclistMonth}</span>, <br></br>while the most dangerous month for pedestrians has
-                been <span style={{ fontWeight: 'bold', color: '#BDBDBD' }}>{worstPedestrianMonth}.</span></h4>
+                been <span style={{ fontWeight: 'bold', color: '#cef5ea' }}>{worstCyclistMonth}</span>, <br></br>while the most dangerous month for pedestrians has
+                been <span style={{ fontWeight: 'bold', color: '#c0d2fc' }}>{worstPedestrianMonth}.</span></h4>
             <Line options={options} data={data} />
             <br></br>
             <br></br>

@@ -24,7 +24,8 @@ ChartJS.register(
 );
 
 const WeekdayChart = (props) => {
-
+    const worstCyclistDay = 'N/A';
+    const worstPedestrianDay = 'N/A';
     const options = {
         plugins: {
             legend: {
@@ -41,14 +42,8 @@ const WeekdayChart = (props) => {
                 title: {
                     display: true,
                     text: 'Click Category to Show/Hide Data',
-                    color: '#ECF0F1',
+                    color: '#BDBDBD',
                 },
-            },
-            title: {
-                display: true,
-                padding: 18,
-                text: 'Accidents Involving Injury Grouped by Day of the Week',
-                color: '#BDBDBD'
             },
         },
         responsive: true,
@@ -120,6 +115,10 @@ const WeekdayChart = (props) => {
     return (
         <Container>
             <h3 className='text-center'>Accidents by Day of the Week</h3>
+            <h4 className='text-center'>
+                The most dangerous day of the week for cyclists is <span style={{ fontWeight: 'bold', color: '#cef5ea' }}>{worstCyclistDay}</span>, <br></br>
+                and the most dangerous day for pedestrians is <span style={{ fontWeight: 'bold', color: '#c0d2fc' }}>{worstPedestrianDay}.</span>.
+            </h4>
             <Bar options={options} data={data} />
             <br></br>
             <br></br>

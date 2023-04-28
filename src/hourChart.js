@@ -85,14 +85,8 @@ const HourChart = (props) => {
                 title: {
                     display: true,
                     text: 'Click Category to Show/Hide Data',
-                    color: '#ECF0F1',
+                    color: '#BDBDBD',
                 },
-            },
-            title: {
-                display: true,
-                padding: 18,
-                text: 'Accidents Involving Injury Grouped by Hour',
-                color: '#BDBDBD'
             },
         },
     };
@@ -125,8 +119,8 @@ const HourChart = (props) => {
         <Container>
             <h3 className='text-center'>Accidents by Hour</h3>
             <h4 className='text-center'>
-                The most dangerous time of day for cyclists is <span style={{ fontWeight: 'bold', color: '#BDBDBD' }}>{worstCyclistTime}</span>, <br></br>
-                and the most dangerous time of day for pedestrians is <span style={{ fontWeight: 'bold', color: '#BDBDBD' }}>{worstPedestrianTime}.</span>.
+                The most dangerous time of day for cyclists is <span style={{ fontWeight: 'bold', color: '#cef5ea' }}>{worstCyclistTime}</span>, <br></br>
+                and the most dangerous time of day for pedestrians is <span style={{ fontWeight: 'bold', color: '#c0d2fc' }}>{worstPedestrianTime}.</span>.
             </h4>
             <Line options={options} data={data} />;
         </Container>

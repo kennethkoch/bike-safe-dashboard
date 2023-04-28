@@ -76,7 +76,7 @@ const YearlyChart = (props) => {
                 title: {
                     display: true,
                     text: 'Click Category to Show/Hide Data',
-                    color: '#ECF0F1',
+                    color: '#BDBDBD',
                 },
                 labels: {
                     color: '#ECF0F1',
@@ -86,12 +86,6 @@ const YearlyChart = (props) => {
 
                     }
                 }
-            },
-            title: {
-                display: true,
-                padding: 18,
-                text: 'Accidents Involving Injuries per Year',
-                color: '#BDBDBD'
             },
         },
     };
