@@ -22,7 +22,13 @@ ChartJS.register(
 );
 
 const YearlyChart = (props) => {
-
+    const currentDate = new Date()
+    const currentDateStr = new Date().toLocaleDateString()
+    const currentYear = currentDate.getFullYear();
+    const worstCyclistYear = 'N/A';
+    const worstPedestrianYear = 'N/A';
+    const cycleStyle = { fontWeight: 'bold', color: '#cef5ea' }
+    const pedestrianStyle = { fontWeight: 'bold', color: '#c0d2fc' }
     const options = {
         responsive: true,
         scales: {
@@ -112,6 +118,13 @@ const YearlyChart = (props) => {
     return (
         <Container>
             <h3 className='text-center'>Yearly Totals</h3>
+            <h4 className='text-center'>The worst year on record
+                for cyclists was <span style={cycleStyle}>{worstCyclistYear}</span>,
+                and the worst year for pedestrians was <span style={pedestrianStyle}>{worstPedestrianYear}</span>. <br></br>
+                2022 was <span style={cycleStyle}>x percent safer</span> than 2021 for cyclists, and <span style={pedestrianStyle}>y percent safer</span> for pedestrians. <br></br>
+                Through {currentDateStr}, this year has been <span style={cycleStyle}>x percent safer</span> than last year for cyclists, and <span style={pedestrianStyle}>y percent safer</span> for pedestrians when compared
+                with the same time period in 2022.
+            </h4>
             <Bar options={options} data={data} />
             <br></br>
             <br></br>
