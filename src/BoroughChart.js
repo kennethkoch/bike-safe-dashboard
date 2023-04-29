@@ -18,7 +18,8 @@ ChartJS.register(CategoryScale,
     Legend);
 
 const BoroughChart = (props) => {
-
+    const worstCyclistBorough = (props.boroughData) ? props.boroughData.worstCyclistBorough : 'N/A';
+    const worstPedestrianBorough = (props.boroughData) ? props.boroughData.worstPedestrianBorough : 'N/A';
     const options = {
         indexAxis: 'y',
         responsive: true,
@@ -73,7 +74,7 @@ const BoroughChart = (props) => {
                 title: {
                     display: true,
                     text: 'Click Category to Show/Hide Data',
-                    color: '#ECF0F1',
+                    color: '#BDBDBD',
                 },
                 labels: {
                     color: '#ECF0F1',
@@ -83,12 +84,6 @@ const BoroughChart = (props) => {
 
                     }
                 }
-            },
-            title: {
-                display: true,
-                padding: 18,
-                text: 'Accidents Involving Injuries Grouped by Borough',
-                color: '#BDBDBD'
             },
         },
     };
@@ -102,12 +97,14 @@ const BoroughChart = (props) => {
                 label: 'Cyclists',
                 data: props.isLoading ? {} : props.boroughData.cyclistBoroughTotals,
                 borderColor: '#27AE60',
+                borderWidth: 2,
                 backgroundColor: '#2ECC71',
             },
             {
                 label: 'Pedestrians',
                 data: props.isLoading ? {} : props.boroughData.pedestrianBoroughTotals,
                 borderColor: '#2980B9',
+                borderWidth: 2,
                 backgroundColor: '#3498DB',
             },
         ],
@@ -116,6 +113,8 @@ const BoroughChart = (props) => {
     return (
         <Container>
             <h3 className='text-center'>Accidents by Borough</h3>
+            <h4 className='text-center'><span className='cycle-text'>{worstCyclistBorough}</span> has had the most cyclist accidents of any borough,<br></br>
+                while <span className='pedestrian-text'>{worstPedestrianBorough}</span> has had the most pedestrian accidents.</h4>
             <Bar options={options} data={data} />
             <br></br>
             <br></br>

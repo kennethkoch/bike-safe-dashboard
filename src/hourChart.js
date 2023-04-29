@@ -24,7 +24,8 @@ ChartJS.register(
 );
 
 const HourChart = (props) => {
-
+    const worstCyclistTime = (props.hourlyData) ? props.hourlyData.worstCyclistTime : 'N/A';
+    const worstPedestrianTime = (props.hourlyData) ? props.hourlyData.worstPedestrianTime : 'N/A';
     const options = {
         responsive: true,
         scales: {
@@ -84,14 +85,8 @@ const HourChart = (props) => {
                 title: {
                     display: true,
                     text: 'Click Category to Show/Hide Data',
-                    color: '#ECF0F1',
+                    color: '#BDBDBD',
                 },
-            },
-            title: {
-                display: true,
-                padding: 18,
-                text: 'Accidents Involving Injury Grouped by Hour',
-                color: '#BDBDBD'
             },
         },
     };
@@ -109,12 +104,14 @@ const HourChart = (props) => {
                 label: 'Cyclists',
                 data: props.isLoading ? {} : props.hourlyData.hourlyCyclistTotals,
                 borderColor: '#27AE60',
+                borderWidth: 2,
                 backgroundColor: '#2ECC71',
             },
             {
                 label: 'Pedestrians',
                 data: props.isLoading ? {} : props.hourlyData.hourlyPedestrianTotals,
                 borderColor: '#2980B9',
+                borderWidth: 2,
                 backgroundColor: '#3498DB',
             },
         ],
@@ -123,6 +120,10 @@ const HourChart = (props) => {
     return (
         <Container>
             <h3 className='text-center'>Accidents by Hour</h3>
+            <h4 className='text-center'>
+                The most dangerous time of day for cyclists is <span className='cycle-text'>{worstCyclistTime}</span>, <br></br>
+                and the most dangerous time of day for pedestrians is <span className='pedestrian-text'>{worstPedestrianTime}</span>.
+            </h4>
             <Line options={options} data={data} />;
         </Container>
     )

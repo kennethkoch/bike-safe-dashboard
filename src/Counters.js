@@ -1,15 +1,20 @@
 import Card from 'react-bootstrap/Card'
 import Container from 'react-bootstrap/Container'
 import { CardGroup, Col, Row } from 'react-bootstrap'
+import React from 'react'
 
 
 const Counters = (props) => {
+    const currentDate = new Date()
+    const currentDateStr = new Date().toLocaleDateString()
+    const currentYear = currentDate.getFullYear();
     return (
         <Container>
             <Row>
                 <Col>
                     <br></br>
-                    <h3 className='text-center'>Year to Date Injury Tracker</h3>
+                    <h3 className='text-center'>{currentYear} Year to Date Injury Tracker</h3>
+                    <h6 className='text-center'>As of {currentDateStr}</h6>
                     <CardGroup>
                         <Card id='cyclist-card' className='text-center' style={{ width: '18rem' }}>
                             <Card.Header>Cyclists</Card.Header>
@@ -33,7 +38,6 @@ const Counters = (props) => {
                     </CardGroup>
                 </Col>
             </Row>
-            <br></br>
             <br></br>
         </Container>
     )

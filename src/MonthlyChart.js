@@ -27,8 +27,28 @@ ChartJS.register(
 );
 
 const MonthlyChart = (props) => {
-
+    const worstCyclistMonth = (props.monthlyData) ? props.monthlyData.worstCyclistMonth : 'N/A';
+    const worstPedestrianMonth = (props.monthlyData) ? props.monthlyData.worstPedestrianMonth : 'N/A';
     const options = {
+        plugins: {
+            legend: {
+                display: true,
+                position: 'top',
+                labels: {
+                    color: '#ECF0F1',
+                    font: {
+                        size: 17,
+                        weight: 500,
+
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'Click Category to Show/Hide Data',
+                    color: '#BDBDBD',
+                },
+            },
+        },
         responsive: true,
         scales: {
             x: {
@@ -73,31 +93,6 @@ const MonthlyChart = (props) => {
                 }
             }
         },
-        plugins: {
-            legend: {
-                display: true,
-                position: 'top',
-                labels: {
-                    color: '#ECF0F1',
-                    font: {
-                        size: 17,
-                        weight: 500,
-
-                    }
-                },
-                title: {
-                    display: true,
-                    text: 'Click Category to Show/Hide Data',
-                    color: '#ECF0F1',
-                },
-            },
-            title: {
-                display: true,
-                padding: 18,
-                text: 'Average Accidents Involving Injuries per Month',
-                color: '#BDBDBD'
-            },
-        },
     };
 
     const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
@@ -110,12 +105,14 @@ const MonthlyChart = (props) => {
                 label: 'Cyclists',
                 data: props.isLoading ? {} : props.monthlyData.monthlyCyclistAverages,
                 borderColor: '#27AE60',
+                borderWidth: 2,
                 backgroundColor: '#2ECC71',
             },
             {
                 label: 'Pedestrians',
                 data: props.isLoading ? {} : props.monthlyData.monthlyPedestrianAverages,
                 borderColor: '#2980B9',
+                borderWidth: 2,
                 backgroundColor: '#3498DB',
             },
         ],
@@ -124,8 +121,10 @@ const MonthlyChart = (props) => {
     return (
         <Container>
             <h3 className='text-center'>Average Monthly Accidents</h3>
+            <h4 className='text-center'>The most dangerous month for cyclists has historically
+                been <span className='cycle-text'>{worstCyclistMonth}</span>, <br></br>while the most dangerous month for pedestrians has
+                been <span className='pedestrian-text'>{worstPedestrianMonth}.</span></h4>
             <Line options={options} data={data} />
-            <br></br>
             <br></br>
         </Container>
     )
