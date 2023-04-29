@@ -25,10 +25,8 @@ const YearlyChart = (props) => {
     const currentDate = new Date()
     const currentDateStr = new Date().toLocaleDateString()
     const currentYear = currentDate.getFullYear();
-    const worstCyclistYear = 'N/A';
-    const worstPedestrianYear = 'N/A';
-    const cycleStyle = { fontWeight: 'bold', color: '#cef5ea' }
-    const pedestrianStyle = { fontWeight: 'bold', color: '#c0d2fc' }
+    const worstCyclistYear = (props.yearlyData) ? props.yearlyData.worstCyclistYear : 'N/A';
+    const worstPedestrianYear = (props.yearlyData) ? props.yearlyData.worstPedestrianYear : 'N/A';
     const options = {
         responsive: true,
         scales: {
@@ -105,12 +103,14 @@ const YearlyChart = (props) => {
                 label: 'Cyclists',
                 data: props.isLoading ? {} : props.yearlyData.yearlyCyclistTotals,
                 borderColor: '#27AE60',
+                borderWidth: 2,
                 backgroundColor: '#2ECC71',
             },
             {
                 label: 'Pedestrians',
                 data: props.isLoading ? {} : props.yearlyData.yearlyPedestrianTotals,
                 borderColor: '#2980B9',
+                borderWidth: 2,
                 backgroundColor: '#3498DB',
             },
         ],
@@ -119,14 +119,13 @@ const YearlyChart = (props) => {
         <Container>
             <h3 className='text-center'>Yearly Totals</h3>
             <h4 className='text-center'>The worst year on record
-                for cyclists was <span style={cycleStyle}>{worstCyclistYear}</span>,
-                and the worst year for pedestrians was <span style={pedestrianStyle}>{worstPedestrianYear}</span>. <br></br>
-                2022 was <span style={cycleStyle}>x percent safer</span> than 2021 for cyclists, and <span style={pedestrianStyle}>y percent safer</span> for pedestrians. <br></br>
-                Through {currentDateStr}, this year has been <span style={cycleStyle}>x percent safer</span> than last year for cyclists, and <span style={pedestrianStyle}>y percent safer</span> for pedestrians when compared
+                for cyclists was <span className='cycle-text'>{worstCyclistYear}</span>,
+                and the worst year for pedestrians was <span className='pedestrian-text'>{worstPedestrianYear}</span>. <br></br>
+                2022 was <span className='cycle-text'>x percent safer</span> than 2021 for cyclists, and <span className='pedestrian-text'>y percent safer</span> for pedestrians. <br></br>
+                Through {currentDateStr}, this year has been <span className='cycle-text'>x percent safer</span> than last year for cyclists, and <span className='pedestrian-text'>y percent safer</span> for pedestrians when compared
                 with the same time period in 2022.
             </h4>
             <Bar options={options} data={data} />
-            <br></br>
             <br></br>
         </Container>
     )

@@ -71,6 +71,16 @@ div.card-body {
   color: #bdbdbd;
 }
 
+.cycle-text {
+  font-weight: 600;
+  color: #cef5ea;
+}
+
+.pedestrian-text {
+  font-weight: 600;
+  color: #c0d2fc;
+}
+
 .nav-link {
   /* color: #B2DFDB !important; */
   font-size: 1.4em;

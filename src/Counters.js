@@ -14,7 +14,7 @@ const Counters = (props) => {
                 <Col>
                     <br></br>
                     <h3 className='text-center'>{currentYear} Year to Date Injury Tracker</h3>
-                    <h4 className='text-center'>As of {currentDateStr}</h4>
+                    <h6 className='text-center'>As of {currentDateStr}</h6>
                     <CardGroup>
                         <Card id='cyclist-card' className='text-center' style={{ width: '18rem' }}>
                             <Card.Header>Cyclists</Card.Header>
@@ -38,7 +38,6 @@ const Counters = (props) => {
                     </CardGroup>
                 </Col>
             </Row>
-            <br></br>
             <br></br>
         </Container>
     )

@@ -24,8 +24,8 @@ ChartJS.register(
 );
 
 const WeekdayChart = (props) => {
-    const worstCyclistDay = 'N/A';
-    const worstPedestrianDay = 'N/A';
+    const worstCyclistDay = (props.weeklyData) ? props.weeklyData.worstCyclistDay : 'N/A';
+    const worstPedestrianDay = (props.weeklyData) ? props.weeklyData.worstPedestrianDay : 'N/A';
     const options = {
         plugins: {
             legend: {
@@ -101,12 +101,14 @@ const WeekdayChart = (props) => {
                 label: 'Cyclists',
                 data: props.isLoading ? {} : props.weeklyData.weeklyCyclistTotals,
                 borderColor: '#27AE60',
+                borderWidth: 2,
                 backgroundColor: '#2ECC71',
             },
             {
                 label: 'Pedestrians',
                 data: props.isLoading ? {} : props.weeklyData.weeklyPedestrianTotals,
                 borderColor: '#2980B9',
+                borderWidth: 2,
                 backgroundColor: '#3498DB',
             },
         ],
@@ -116,11 +118,10 @@ const WeekdayChart = (props) => {
         <Container>
             <h3 className='text-center'>Accidents by Day of the Week</h3>
             <h4 className='text-center'>
-                The most dangerous day of the week for cyclists is <span style={{ fontWeight: 'bold', color: '#cef5ea' }}>{worstCyclistDay}</span>, <br></br>
-                and the most dangerous day for pedestrians is <span style={{ fontWeight: 'bold', color: '#c0d2fc' }}>{worstPedestrianDay}.</span>.
+                The most dangerous day of the week for cyclists is <span className='cycle-text'>{worstCyclistDay}</span>, <br></br>
+                and the most dangerous day for pedestrians is <span className='pedestrian-text'>{worstPedestrianDay}</span>.
             </h4>
             <Bar options={options} data={data} />
-            <br></br>
             <br></br>
         </Container>
     )
