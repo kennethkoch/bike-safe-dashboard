@@ -71,7 +71,7 @@ print(
 )
 # print(results_df.dtypes)
 
-data = {
+data_object = {
     "cyclist_injuries": str(sum_cyclist_injuries),
     "cyclist_deaths": str(sum_cyclist_deaths),
     "pedestrian_injuries": str(sum_pedestrian_injuries),
