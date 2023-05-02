@@ -1,6 +1,10 @@
 import pandas as pd
 from sodapy import Socrata
 
+import requests
+from datetime import datetime, timedelta
+from cachetools import cached, TTLCache
+
 # Unauthenticated client only works with public data sets. Note 'None'
 # in place of application token, and no username or password:
 client = Socrata("data.cityofnewyork.us", None)
@@ -22,13 +26,32 @@ pedestrians_injured = (
 # only return crashes where at least one cyclist or pedestrian was injured or killed
 all_records_with_injury = cyclists_injured + " OR " + pedestrians_injured
 
-# initial data upon starting server
-results = client.get("h9gi-nx95", limit=2000, where=all_records_with_injury)
+cache = TTLCache(maxsize=1, ttl=86400)
+
+
+@cached(cache)
+def get_api_data():
+    print("getting updated data")
+
+    results = client.get("h9gi-nx95", limit=500000, where=all_records_with_injury)
+    results_df = pd.DataFrame.from_records(results)
+    print("results updated")
+    return results_df
+
+
+def get_data():
+    results_df = get_api_data()
+    print("get data called")
+    return results_df
+
+
+# results = client.get("h9gi-nx95", limit=500000, where=all_records_with_injury)
+# results = client.get("h9gi-nx95", limit=20)
 
 # Convert to pandas DataFrame
+results_df = get_data()
 pd.set_option("display.max_rows", None)
 pd.set_option("display.max_columns", None)
-results_df = pd.DataFrame.from_records(results)
 column_names = results_df.columns.tolist()
 print(column_names)
 # print(results)
@@ -48,4 +71,9 @@ print(
 )
 # print(results_df.dtypes)
 
-data = {"name": "test", "age": 30, "city": "chicago"}
+data = {
+    "cyclist_injuries": str(sum_cyclist_injuries),
+    "cyclist_deaths": str(sum_cyclist_deaths),
+    "pedestrian_injuries": str(sum_pedestrian_injuries),
+    "pedestrian_deaths": str(sum_pedestrian_deaths),
+}
