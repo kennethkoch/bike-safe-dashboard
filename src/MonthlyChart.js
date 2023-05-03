@@ -103,14 +103,14 @@ const MonthlyChart = (props) => {
         datasets: [
             {
                 label: 'Cyclists',
-                data: props.isLoading ? {} : props.monthlyData.monthlyCyclistAverages,
+                data: props.isLoading ? props.monthlyData.monthlyCyclistAverages : {},
                 borderColor: '#27AE60',
                 borderWidth: 2,
                 backgroundColor: '#2ECC71',
             },
             {
                 label: 'Pedestrians',
-                data: props.isLoading ? {} : props.monthlyData.monthlyPedestrianAverages,
+                data: props.isLoading ? props.monthlyData.monthlyPedestrianAverages : {},
                 borderColor: '#2980B9',
                 borderWidth: 2,
                 backgroundColor: '#3498DB',

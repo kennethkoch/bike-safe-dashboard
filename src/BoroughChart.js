@@ -95,14 +95,14 @@ const BoroughChart = (props) => {
         datasets: [
             {
                 label: 'Cyclists',
-                data: props.isLoading ? {} : props.boroughData.cyclistBoroughTotals,
+                data: props.boroughData ? props.boroughData.cyclistBoroughTotals : {},
                 borderColor: '#27AE60',
                 borderWidth: 2,
                 backgroundColor: '#2ECC71',
             },
             {
                 label: 'Pedestrians',
-                data: props.isLoading ? {} : props.boroughData.pedestrianBoroughTotals,
+                data: props.boroughData ? props.boroughData.pedestrianBoroughTotals : {},
                 borderColor: '#2980B9',
                 borderWidth: 2,
                 backgroundColor: '#3498DB',

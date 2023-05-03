@@ -101,14 +101,14 @@ const YearlyChart = (props) => {
         datasets: [
             {
                 label: 'Cyclists',
-                data: props.isLoading ? {} : props.yearlyData.yearlyCyclistTotals,
+                data: props.yearlyData ? props.yearlyData.yearlyCyclistTotals : {},
                 borderColor: '#27AE60',
                 borderWidth: 2,
                 backgroundColor: '#2ECC71',
             },
             {
                 label: 'Pedestrians',
-                data: props.isLoading ? {} : props.yearlyData.yearlyPedestrianTotals,
+                data: props.yearlyData ? props.yearlyData.yearlyPedestrianTotals : {},
                 borderColor: '#2980B9',
                 borderWidth: 2,
                 backgroundColor: '#3498DB',

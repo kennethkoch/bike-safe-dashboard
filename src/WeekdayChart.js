@@ -99,14 +99,14 @@ const WeekdayChart = (props) => {
         datasets: [
             {
                 label: 'Cyclists',
-                data: props.isLoading ? {} : props.weeklyData.weeklyCyclistTotals,
+                data: props.weeklyData ? props.weeklyData.weeklyCyclistTotals : {},
                 borderColor: '#27AE60',
                 borderWidth: 2,
                 backgroundColor: '#2ECC71',
             },
             {
                 label: 'Pedestrians',
-                data: props.isLoading ? {} : props.weeklyData.weeklyPedestrianTotals,
+                data: props.weeklyData ? props.weeklyData.weeklyPedestrianTotals : {},
                 borderColor: '#2980B9',
                 borderWidth: 2,
                 backgroundColor: '#3498DB',

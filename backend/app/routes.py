@@ -30,7 +30,7 @@ def test():
 def return_data():
     data.get_data()
     # test_data = {"name": "John", "age": 30, "city": "New York"}
-    return jsonify(data.data_object)
+    return data.data_object
 
 
 # if __name__ == "__main__":

@@ -33,7 +33,7 @@ cache = TTLCache(maxsize=1, ttl=86400)
 def get_api_data():
     print("getting updated data")
 
-    results = client.get("h9gi-nx95", limit=500000, where=all_records_with_injury)
+    results = client.get("h9gi-nx95", limit=5000, where=all_records_with_injury)
     results_df = pd.DataFrame.from_records(results)
     print("results updated")
     return results_df
@@ -72,8 +72,39 @@ print(
 # print(results_df.dtypes)
 
 data_object = {
-    "cyclist_injuries": str(sum_cyclist_injuries),
-    "cyclist_deaths": str(sum_cyclist_deaths),
-    "pedestrian_injuries": str(sum_pedestrian_injuries),
-    "pedestrian_deaths": str(sum_pedestrian_deaths),
+    "counterData": {
+        "ytdCyclistInjuries": str(sum_cyclist_injuries),
+        "ytdCyclistDeaths": str(sum_cyclist_deaths),
+        "ytdPedestrianInjuries": str(sum_pedestrian_injuries),
+        "ytdPedestrianDeaths": str(sum_pedestrian_deaths),
+    },
 }
+
+# data = {
+#     "counterData": {
+#         "ytdCyclistInjuries": year_to_date_cyclist_injuries,
+#         "ytdCyclistDeaths": year_to_date_cyclist_deaths,
+#         "ytdPedestrianInjuries": year_to_date_pedestrian_injuries,
+#         "ytdPedestrianDeaths": year_to_date_pedestrian_deaths,
+#     },
+#     "yearlyData": {
+#         "yearlyCyclistTotals": yearly_cyclist_totals,
+#         "yearlyPedestrianTotals": yearly_pedestrian_totals,
+#     },
+#     "boroughData": {
+#         "cyclistBoroughTotals": cyclist_borough_totals,
+#         "pedestrianBoroughTotals": pedestrian_borough_totals,
+#     },
+#     "monthlyData": {
+#         "monthlyCyclistAverages": monthly_cyclist_averages,
+#         "monthlyPedestrianAverages": monthly_pedestrian_averages,
+#     },
+#     "weeklyData": {
+#         "weeklyCyclistTotals": weekly_cyclist_totals,
+#         "weeklyPedestrianTotals": weekly_pedestrian_totals,
+#     },
+#     "hourlyData": {
+#         "hourlyCyclistTotals": hourly_cyclist_totals,
+#         "hourlyPedestrianTotals": hourly_pedestrian_totals,
+#     },
+# }

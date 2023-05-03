@@ -19,9 +19,9 @@ const Counters = (props) => {
                         <Card id='cyclist-card' className='text-center' style={{ width: '18rem' }}>
                             <Card.Header>Cyclists</Card.Header>
                             <Card.Body>
-                                <Card.Title>Injuries: {props.isLoading ? 0 : props.counterData.ytdCyclistInjuries}</Card.Title>
+                                <Card.Title>Injuries: {props.counterData ? props.counterData.ytdCyclistInjuries : 0}</Card.Title>
                                 <Card.Text>
-                                    Deaths: {props.isLoading ? 0 : props.counterData.ytdCyclistDeaths}
+                                    Deaths: {props.counterData ? props.counterData.ytdCyclistDeaths : 0}
                                 </Card.Text>
                             </Card.Body>
                         </Card>
@@ -29,9 +29,9 @@ const Counters = (props) => {
                         <Card id='pedestrian-card' className='text-center' style={{ width: '18rem' }}>
                             <Card.Header>Pedestrians</Card.Header>
                             <Card.Body>
-                                <Card.Title>Injuries: {props.isLoading ? 0 : props.counterData.ytdPedestrianInjuries}</Card.Title>
+                                <Card.Title>Injuries: {props.counterData ? props.counterData.ytdPedestrianInjuries : 0}</Card.Title>
                                 <Card.Text>
-                                    Deaths: {props.isLoading ? 0 : props.counterData.ytdPedestrianDeaths}
+                                    Deaths: {props.counterData ? props.counterData.ytdPedestrianDeaths : 0}
                                 </Card.Text>
                             </Card.Body>
                         </Card>
