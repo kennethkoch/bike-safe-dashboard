@@ -33,7 +33,7 @@ cache = TTLCache(maxsize=1, ttl=86400)
 def get_api_data():
     print("getting updated data")
 
-    results = client.get("h9gi-nx95", limit=5000, where=all_records_with_injury)
+    results = client.get("h9gi-nx95", limit=500000, where=all_records_with_injury)
     results_df = pd.DataFrame.from_records(results)
     print("results updated")
     return results_df
@@ -70,16 +70,74 @@ print(
     sum_pedestrian_deaths,
 )
 # print(results_df.dtypes)
+# print(results_df.crash_date)
+
+# make current date
+today = datetime.today()
+date_cutoff = (today - timedelta(days=365)).strftime("%Y-%m-%d")
+print(date_cutoff)
+print("today: ", today.strftime("%Y-%m-%d"))
+this_year_df = results_df[
+    (results_df["crash_date"] >= "2023-01-01")
+    & (results_df["crash_date"] < today.strftime("%Y-%m-%d"))
+]
+last_year_df = results_df[
+    (results_df["crash_date"] >= "2022-01-01")
+    & (results_df["crash_date"] < date_cutoff)
+]
+
+sum_this_year_cyclist_injuries = (
+    this_year_df["number_of_cyclist_injured"].astype(int).sum()
+)
+sum_this_year_cyclist_deaths = (
+    this_year_df["number_of_cyclist_killed"].astype(int).sum()
+)
+sum_this_year_pedestrian_injuries = (
+    this_year_df["number_of_pedestrians_injured"].astype(int).sum()
+)
+sum_this_year_pedestrain_deaths = (
+    this_year_df["number_of_pedestrians_killed"].astype(int).sum()
+)
+sum_last_year_cyclist_injuries = (
+    last_year_df["number_of_cyclist_injured"].astype(int).sum()
+)
+sum_last_year_cyclist_deaths = (
+    last_year_df["number_of_cyclist_killed"].astype(int).sum()
+)
+sum_last_year_pedestrian_injuries = (
+    last_year_df["number_of_pedestrians_injured"].astype(int).sum()
+)
+sum_last_year_pedestrian_deaths = (
+    last_year_df["number_of_pedestrians_killed"].astype(int).sum()
+)
+print(
+    "there were ",
+    sum_last_year_cyclist_injuries,
+    " cyclist injuries by this time last year and ",
+    sum_last_year_cyclist_deaths,
+    " cyclist deaths by this time last year",
+)
+
+
+# num_results_2023 = len(df_2023.index)
+# print(f"{num_results_2023} results occurred in 2023")
+# df_2022 = results_df[results_df["crash_date"].str.contains("2022")]
+# num_results_2022 = len(df_2022.index)
+# print(f"{num_results_2022} results occurred in 2022")
 
 data_object = {
     "counterData": {
-        "ytdCyclistInjuries": str(sum_cyclist_injuries),
-        "ytdCyclistDeaths": str(sum_cyclist_deaths),
-        "ytdPedestrianInjuries": str(sum_pedestrian_injuries),
-        "ytdPedestrianDeaths": str(sum_pedestrian_deaths),
+        "ytdCyclistInjuries": str(sum_this_year_cyclist_injuries),
+        "ytdCyclistDeaths": str(sum_this_year_cyclist_deaths),
+        "ytdPedestrianInjuries": str(sum_this_year_pedestrian_injuries),
+        "ytdPedestrianDeaths": str(sum_this_year_pedestrain_deaths),
+        "lastYtdCyclistInjuries": str(sum_last_year_cyclist_injuries),
+        "lastYtdCyclistDeaths": str(sum_last_year_cyclist_deaths),
+        "lastYtdPedestrianInjuries": str(sum_last_year_pedestrian_injuries),
+        "lastYtdPedestrianDeaths": str(sum_last_year_pedestrian_deaths),
     },
 }
-
+print(data_object)
 # data = {
 #     "counterData": {
 #         "ytdCyclistInjuries": year_to_date_cyclist_injuries,
