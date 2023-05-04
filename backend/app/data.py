@@ -50,15 +50,45 @@ def get_data():
 
 # Convert to pandas DataFrame
 results_df = get_data()
+
+# filter rows where either "number_of_cyclist_injured" or "number_of_cyclist_killed" is > 0
+cyclist_df = results_df[
+    (results_df["number_of_cyclist_injured"].astype(int) > 0)
+    | (results_df["number_of_cyclist_killed"].astype(int) > 0)
+].copy()
+
+pedestrian_df = results_df[
+    (results_df["number_of_pedestrians_injured"].astype(int) > 0)
+    | (results_df["number_of_pedestrians_killed"].astype(int) > 0)
+].copy()
+
+# print(cyclist_df["number_of_pedestrians_injured"])
+
 pd.set_option("display.max_rows", None)
 pd.set_option("display.max_columns", None)
-column_names = results_df.columns.tolist()
-print(column_names)
+
+cyclist_df["crash_date"] = pd.to_datetime(cyclist_df["crash_date"])
+pedestrian_df["crash_date"] = pd.to_datetime(pedestrian_df["crash_date"])
+yearly_cyclist_totals = (
+    cyclist_df.groupby(cyclist_df["crash_date"].dt.year)["crash_date"]
+    .agg("count")
+    .to_dict()
+)
+yearly_pedestrian_totals = (
+    pedestrian_df.groupby(pedestrian_df["crash_date"].dt.year)["crash_date"]
+    .agg("count")
+    .to_dict()
+)
+# column_names = results_df.columns.tolist()
+print(yearly_cyclist_totals)
+print(yearly_pedestrian_totals)
+# print(column_names)
 # print(results)
 sum_cyclist_injuries = results_df["number_of_cyclist_injured"].astype(int).sum()
 sum_cyclist_deaths = results_df["number_of_cyclist_killed"].astype(int).sum()
 sum_pedestrian_injuries = results_df["number_of_pedestrians_injured"].astype(int).sum()
 sum_pedestrian_deaths = results_df["number_of_pedestrians_killed"].astype(int).sum()
+
 print(
     "total cyclist injuries: ",
     sum_cyclist_injuries,
@@ -110,13 +140,13 @@ sum_last_year_pedestrian_injuries = (
 sum_last_year_pedestrian_deaths = (
     last_year_df["number_of_pedestrians_killed"].astype(int).sum()
 )
-print(
-    "there were ",
-    sum_last_year_cyclist_injuries,
-    " cyclist injuries by this time last year and ",
-    sum_last_year_cyclist_deaths,
-    " cyclist deaths by this time last year",
-)
+# print(
+#     "there were ",
+#     sum_last_year_cyclist_injuries,
+#     " cyclist injuries by this time last year and ",
+#     sum_last_year_cyclist_deaths,
+#     " cyclist deaths by this time last year",
+# )
 
 
 # num_results_2023 = len(df_2023.index)
@@ -135,6 +165,10 @@ data_object = {
         "lastYtdCyclistDeaths": str(sum_last_year_cyclist_deaths),
         "lastYtdPedestrianInjuries": str(sum_last_year_pedestrian_injuries),
         "lastYtdPedestrianDeaths": str(sum_last_year_pedestrian_deaths),
+    },
+    "yearlyData": {
+        "yearlyCyclistTotals": yearly_cyclist_totals,
+        "yearlyPedestrianTotals": yearly_pedestrian_totals,
     },
 }
 print(data_object)
