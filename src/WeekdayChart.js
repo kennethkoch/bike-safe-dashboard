@@ -24,8 +24,8 @@ ChartJS.register(
 );
 
 const WeekdayChart = (props) => {
-    const worstCyclistDay = (props.weeklyData) ? props.weeklyData.worstCyclistDay : 'N/A';
-    const worstPedestrianDay = (props.weeklyData) ? props.weeklyData.worstPedestrianDay : 'N/A';
+    const worstCyclistDay = (props.weekDayData) ? props.weekDayData.worstCyclistDay : 'N/A';
+    const worstPedestrianDay = (props.weekDayData) ? props.weekDayData.worstPedestrianDay : 'N/A';
     const options = {
         plugins: {
             legend: {
@@ -99,14 +99,14 @@ const WeekdayChart = (props) => {
         datasets: [
             {
                 label: 'Cyclists',
-                data: props.weeklyData ? props.weeklyData.weeklyCyclistTotals : {},
+                data: props.weekDayData ? props.weekDayData.cyclistDayCounts : {},
                 borderColor: '#27AE60',
                 borderWidth: 2,
                 backgroundColor: '#2ECC71',
             },
             {
                 label: 'Pedestrians',
-                data: props.weeklyData ? props.weeklyData.weeklyPedestrianTotals : {},
+                data: props.weekDayData ? props.weekDayData.pedestrianDayCounts : {},
                 borderColor: '#2980B9',
                 borderWidth: 2,
                 backgroundColor: '#3498DB',

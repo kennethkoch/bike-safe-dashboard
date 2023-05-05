@@ -68,7 +68,9 @@ pd.set_option("display.max_rows", None)
 pd.set_option("display.max_columns", None)
 
 cyclist_df["crash_date"] = pd.to_datetime(cyclist_df["crash_date"])
+cyclist_df["crash_time"] = pd.to_datetime(cyclist_df["crash_time"])
 pedestrian_df["crash_date"] = pd.to_datetime(pedestrian_df["crash_date"])
+pedestrian_df["crash_time"] = pd.to_datetime(pedestrian_df["crash_time"])
 yearly_cyclist_totals = (
     cyclist_df.groupby(cyclist_df["crash_date"].dt.year)["crash_date"]
     .agg("count")
@@ -80,8 +82,8 @@ yearly_pedestrian_totals = (
     .to_dict()
 )
 # column_names = results_df.columns.tolist()
-print(yearly_cyclist_totals)
-print(yearly_pedestrian_totals)
+# print(yearly_cyclist_totals)
+# print(yearly_pedestrian_totals)
 # print(column_names)
 # print(results)
 sum_cyclist_injuries = results_df["number_of_cyclist_injured"].astype(int).sum()
@@ -89,24 +91,24 @@ sum_cyclist_deaths = results_df["number_of_cyclist_killed"].astype(int).sum()
 sum_pedestrian_injuries = results_df["number_of_pedestrians_injured"].astype(int).sum()
 sum_pedestrian_deaths = results_df["number_of_pedestrians_killed"].astype(int).sum()
 
-print(
-    "total cyclist injuries: ",
-    sum_cyclist_injuries,
-    " total cyclist deaths: ",
-    sum_cyclist_deaths,
-    " total pedestrian injuries: ",
-    sum_pedestrian_injuries,
-    " total pedestrian deaths: ",
-    sum_pedestrian_deaths,
-)
+# print(
+#     "total cyclist injuries: ",
+#     sum_cyclist_injuries,
+#     " total cyclist deaths: ",
+#     sum_cyclist_deaths,
+#     " total pedestrian injuries: ",
+#     sum_pedestrian_injuries,
+#     " total pedestrian deaths: ",
+#     sum_pedestrian_deaths,
+# )
 # print(results_df.dtypes)
 # print(results_df.crash_date)
 
 # make current date
 today = datetime.today()
 date_cutoff = (today - timedelta(days=365)).strftime("%Y-%m-%d")
-print(date_cutoff)
-print("today: ", today.strftime("%Y-%m-%d"))
+# print(date_cutoff)
+# print("today: ", today.strftime("%Y-%m-%d"))
 this_year_df = results_df[
     (results_df["crash_date"] >= "2023-01-01")
     & (results_df["crash_date"] < today.strftime("%Y-%m-%d"))
@@ -140,6 +142,28 @@ sum_last_year_pedestrian_injuries = (
 sum_last_year_pedestrian_deaths = (
     last_year_df["number_of_pedestrians_killed"].astype(int).sum()
 )
+
+cyclist_day_counts = cyclist_df["crash_date"].dt.day_name().value_counts().to_dict()
+pedestrian_day_counts = (
+    pedestrian_df["crash_date"].dt.day_name().value_counts().to_dict()
+)
+
+
+cyclist_df["hour"] = cyclist_df["crash_time"].dt.hour
+cyclist_hour_counts = cyclist_df["hour"].value_counts().to_dict()
+
+hourly_cyclist_counts = []
+for key in sorted(cyclist_hour_counts.keys()):
+    hourly_cyclist_counts.append({"x": key, "y": cyclist_hour_counts[key]})
+
+pedestrian_df["hour"] = pedestrian_df["crash_time"].dt.hour
+pedestrian_hour_counts = pedestrian_df["hour"].value_counts().to_dict()
+
+hourly_pedestrian_counts = []
+for key in sorted(pedestrian_hour_counts.keys()):
+    hourly_pedestrian_counts.append({"x": key, "y": pedestrian_hour_counts[key]})
+
+
 # print(
 #     "there were ",
 #     sum_last_year_cyclist_injuries,
@@ -169,6 +193,14 @@ data_object = {
     "yearlyData": {
         "yearlyCyclistTotals": yearly_cyclist_totals,
         "yearlyPedestrianTotals": yearly_pedestrian_totals,
+    },
+    "weekDayData": {
+        "cyclistDayCounts": cyclist_day_counts,
+        "pedestrianDayCounts": pedestrian_day_counts,
+    },
+    "hourlyData": {
+        "hourlyCyclistTotals": hourly_cyclist_counts,
+        "hourlyPedestrianTotals": hourly_pedestrian_counts,
     },
 }
 print(data_object)

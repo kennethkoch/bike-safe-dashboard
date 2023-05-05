@@ -50,7 +50,7 @@ function App() {
       <Counters counterData={data.counterData} />
       <YearlyChart yearlyData={data.yearlyData} />
       <MonthlyChart monthlyData={data.monthlyData} />
-      <WeekdayChart weeklyData={data.weeklyData} />
+      <WeekdayChart weekDayData={data.weekDayData} />
       <HourChart hourlyData={data.hourlyData} />
       <BoroughChart boroughData={data.boroughData} />
       <Footer />
