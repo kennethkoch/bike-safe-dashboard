@@ -9,15 +9,6 @@ from cachetools import cached, TTLCache
 # in place of application token, and no username or password:
 client = Socrata("data.cityofnewyork.us", None)
 
-# Example authenticated client (needed for non-public datasets):
-# client = Socrata(data.cityofnewyork.us,
-#                  MyAppToken,
-#                  username="user@example.com",
-#                  password="AFakePassword")
-
-# First 2000 results, returned as JSON from API / converted to Python list of
-# dictionaries by sodapy.
-# results = client.get("h9gi-nx95", limit=2000)
 cyclists_injured = "number_of_cyclist_injured>0 OR number_of_cyclist_killed>0"
 pedestrians_injured = (
     "number_of_pedestrians_injured>0 OR number_of_pedestrians_killed>0"
@@ -29,6 +20,7 @@ all_records_with_injury = cyclists_injured + " OR " + pedestrians_injured
 cache = TTLCache(maxsize=1, ttl=86400)
 
 
+# call API and cache results for 24 hours
 @cached(cache)
 def get_api_data():
     print("getting updated data")
@@ -45,13 +37,10 @@ def get_data():
     return results_df
 
 
-# results = client.get("h9gi-nx95", limit=500000, where=all_records_with_injury)
-# results = client.get("h9gi-nx95", limit=20)
-
-# Convert to pandas DataFrame
+# pandas DataFrame
 results_df = get_data()
 
-# filter rows where either "number_of_cyclist_injured" or "number_of_cyclist_killed" is > 0
+# cyclists and pedestrians dataframes
 cyclist_df = results_df[
     (results_df["number_of_cyclist_injured"].astype(int) > 0)
     | (results_df["number_of_cyclist_killed"].astype(int) > 0)
@@ -62,15 +51,16 @@ pedestrian_df = results_df[
     | (results_df["number_of_pedestrians_killed"].astype(int) > 0)
 ].copy()
 
-# print(cyclist_df["number_of_pedestrians_injured"])
-
 pd.set_option("display.max_rows", None)
 pd.set_option("display.max_columns", None)
 
+# convert crash_dat to datetime
 cyclist_df["crash_date"] = pd.to_datetime(cyclist_df["crash_date"])
 cyclist_df["crash_time"] = pd.to_datetime(cyclist_df["crash_time"])
 pedestrian_df["crash_date"] = pd.to_datetime(pedestrian_df["crash_date"])
 pedestrian_df["crash_time"] = pd.to_datetime(pedestrian_df["crash_time"])
+
+# calculate yearly totals
 yearly_cyclist_totals = (
     cyclist_df.groupby(cyclist_df["crash_date"].dt.year)["crash_date"]
     .agg("count")
@@ -81,34 +71,16 @@ yearly_pedestrian_totals = (
     .agg("count")
     .to_dict()
 )
-# column_names = results_df.columns.tolist()
-# print(yearly_cyclist_totals)
-# print(yearly_pedestrian_totals)
-# print(column_names)
-# print(results)
+
 sum_cyclist_injuries = results_df["number_of_cyclist_injured"].astype(int).sum()
 sum_cyclist_deaths = results_df["number_of_cyclist_killed"].astype(int).sum()
 sum_pedestrian_injuries = results_df["number_of_pedestrians_injured"].astype(int).sum()
 sum_pedestrian_deaths = results_df["number_of_pedestrians_killed"].astype(int).sum()
 
-# print(
-#     "total cyclist injuries: ",
-#     sum_cyclist_injuries,
-#     " total cyclist deaths: ",
-#     sum_cyclist_deaths,
-#     " total pedestrian injuries: ",
-#     sum_pedestrian_injuries,
-#     " total pedestrian deaths: ",
-#     sum_pedestrian_deaths,
-# )
-# print(results_df.dtypes)
-# print(results_df.crash_date)
-
-# make current date
+# current date
 today = datetime.today()
 date_cutoff = (today - timedelta(days=365)).strftime("%Y-%m-%d")
-# print(date_cutoff)
-# print("today: ", today.strftime("%Y-%m-%d"))
+
 this_year_df = results_df[
     (results_df["crash_date"] >= "2023-01-01")
     & (results_df["crash_date"] < today.strftime("%Y-%m-%d"))
@@ -143,12 +115,13 @@ sum_last_year_pedestrian_deaths = (
     last_year_df["number_of_pedestrians_killed"].astype(int).sum()
 )
 
+# calculate day of week totals
 cyclist_day_counts = cyclist_df["crash_date"].dt.day_name().value_counts().to_dict()
 pedestrian_day_counts = (
     pedestrian_df["crash_date"].dt.day_name().value_counts().to_dict()
 )
 
-
+# calculate hour totals
 cyclist_df["hour"] = cyclist_df["crash_time"].dt.hour
 cyclist_hour_counts = cyclist_df["hour"].value_counts().to_dict()
 
@@ -175,6 +148,7 @@ def find_denominator_month(month):
     return total_months
 
 
+# this function calculates the monthly average for a given count
 def calculate_monthly_average(count):
     averages = []
     for i in range(1, 13):
@@ -186,34 +160,16 @@ months = range(1, 13)  # All 12 months
 cyclist_monthly_totals = {month: 0 for month in months}
 pedestrian_monthly_totals = {month: 0 for month in months}
 
-# Print the monthly totals
 for value in cyclist_df["crash_date"]:
     cyclist_monthly_totals[value.month] += 1
 for value in pedestrian_df["crash_date"]:
     pedestrian_monthly_totals[value.month] += 1
-print(cyclist_monthly_totals)
-print(pedestrian_monthly_totals)
 
+# calculate monthly averages
 cyclist_monthly_average = calculate_monthly_average(cyclist_monthly_totals)
 pedestrian_monthly_average = calculate_monthly_average(pedestrian_monthly_totals)
-print(cyclist_monthly_average)
-print(pedestrian_monthly_average)
 
-# print(
-#     "there were ",
-#     sum_last_year_cyclist_injuries,
-#     " cyclist injuries by this time last year and ",
-#     sum_last_year_cyclist_deaths,
-#     " cyclist deaths by this time last year",
-# )
-
-
-# num_results_2023 = len(df_2023.index)
-# print(f"{num_results_2023} results occurred in 2023")
-# df_2022 = results_df[results_df["crash_date"].str.contains("2022")]
-# num_results_2022 = len(df_2022.index)
-# print(f"{num_results_2022} results occurred in 2022")
-
+# object to be returned
 data_object = {
     "counterData": {
         "ytdCyclistInjuries": str(sum_this_year_cyclist_injuries),
@@ -242,32 +198,3 @@ data_object = {
         "monthlyPedestrianAverages": pedestrian_monthly_average,
     },
 }
-# print(data_object)
-# data = {
-#     "counterData": {
-#         "ytdCyclistInjuries": year_to_date_cyclist_injuries,
-#         "ytdCyclistDeaths": year_to_date_cyclist_deaths,
-#         "ytdPedestrianInjuries": year_to_date_pedestrian_injuries,
-#         "ytdPedestrianDeaths": year_to_date_pedestrian_deaths,
-#     },
-#     "yearlyData": {
-#         "yearlyCyclistTotals": yearly_cyclist_totals,
-#         "yearlyPedestrianTotals": yearly_pedestrian_totals,
-#     },
-#     "boroughData": {
-#         "cyclistBoroughTotals": cyclist_borough_totals,
-#         "pedestrianBoroughTotals": pedestrian_borough_totals,
-#     },
-#     "monthlyData": {
-#         "monthlyCyclistAverages": monthly_cyclist_averages,
-#         "monthlyPedestrianAverages": monthly_pedestrian_averages,
-#     },
-#     "weeklyData": {
-#         "weeklyCyclistTotals": weekly_cyclist_totals,
-#         "weeklyPedestrianTotals": weekly_pedestrian_totals,
-#     },
-#     "hourlyData": {
-#         "hourlyCyclistTotals": hourly_cyclist_totals,
-#         "hourlyPedestrianTotals": hourly_pedestrian_totals,
-#     },
-# }

@@ -1,6 +1,5 @@
 from flask import Flask, jsonify
 from . import app
-
 from . import data
 
 data.get_data()
