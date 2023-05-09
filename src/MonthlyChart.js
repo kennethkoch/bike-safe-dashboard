@@ -29,6 +29,8 @@ ChartJS.register(
 const MonthlyChart = (props) => {
     const worstCyclistMonth = (props.monthlyData) ? props.monthlyData.worstCyclistMonth : 'N/A';
     const worstPedestrianMonth = (props.monthlyData) ? props.monthlyData.worstPedestrianMonth : 'N/A';
+    console.log(props.monthlyData ? typeof (props.monthlyData.monthlyCyclistAverages[0]) : 'N/A')
+    const test_data = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     const options = {
         plugins: {
             legend: {
@@ -103,14 +105,14 @@ const MonthlyChart = (props) => {
         datasets: [
             {
                 label: 'Cyclists',
-                data: props.isLoading ? props.monthlyData.monthlyCyclistAverages : {},
+                data: props.monthlyData ? props.monthlyData.monthlyCyclistAverages : [],
                 borderColor: '#27AE60',
                 borderWidth: 2,
                 backgroundColor: '#2ECC71',
             },
             {
                 label: 'Pedestrians',
-                data: props.isLoading ? props.monthlyData.monthlyPedestrianAverages : {},
+                data: props.monthlyData ? props.monthlyData.monthlyPedestrianAverages : [],
                 borderColor: '#2980B9',
                 borderWidth: 2,
                 backgroundColor: '#3498DB',

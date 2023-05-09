@@ -164,6 +164,41 @@ for key in sorted(pedestrian_hour_counts.keys()):
     hourly_pedestrian_counts.append({"x": key, "y": pedestrian_hour_counts[key]})
 
 
+# this function finds how many times a given month has occurred since 2012,
+# and returns the denominator to be used in monthly average calculation
+def find_denominator_month(month):
+    total_months = datetime.today().year - 2013
+    if month >= 7:  # account for the limited data in 2012(jan-july)
+        total_months += 1
+    if datetime.today().month >= month:  # if the month has already occurred this year
+        total_months += 1
+    return total_months
+
+
+def calculate_monthly_average(count):
+    averages = []
+    for i in range(1, 13):
+        averages.append(round(count[i] / find_denominator_month(i)))
+    return averages
+
+
+months = range(1, 13)  # All 12 months
+cyclist_monthly_totals = {month: 0 for month in months}
+pedestrian_monthly_totals = {month: 0 for month in months}
+
+# Print the monthly totals
+for value in cyclist_df["crash_date"]:
+    cyclist_monthly_totals[value.month] += 1
+for value in pedestrian_df["crash_date"]:
+    pedestrian_monthly_totals[value.month] += 1
+print(cyclist_monthly_totals)
+print(pedestrian_monthly_totals)
+
+cyclist_monthly_average = calculate_monthly_average(cyclist_monthly_totals)
+pedestrian_monthly_average = calculate_monthly_average(pedestrian_monthly_totals)
+print(cyclist_monthly_average)
+print(pedestrian_monthly_average)
+
 # print(
 #     "there were ",
 #     sum_last_year_cyclist_injuries,
@@ -202,8 +237,12 @@ data_object = {
         "hourlyCyclistTotals": hourly_cyclist_counts,
         "hourlyPedestrianTotals": hourly_pedestrian_counts,
     },
+    "monthlyData": {
+        "monthlyCyclistAverages": cyclist_monthly_average,
+        "monthlyPedestrianAverages": pedestrian_monthly_average,
+    },
 }
-print(data_object)
+# print(data_object)
 # data = {
 #     "counterData": {
 #         "ytdCyclistInjuries": year_to_date_cyclist_injuries,
