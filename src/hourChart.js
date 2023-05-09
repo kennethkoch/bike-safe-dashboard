@@ -93,23 +93,23 @@ const HourChart = (props) => {
 
 
 
-    const labels = ['12:00 a.m.', '1:00 a.m.', '2:00 a.m.', '3:00 a.m.', '4:00 a.m.', '5:00 a.m.', '6:00 a.m.',
-        '7:00 a.m.', '8:00 a.m.', '9:00 a.m.', '10:00 a.m.', '11:00 a.m.', '12:00 p.m.', '1:00 p.m.', '2:00 p.m.',
-        '3:00 p.m.', '4:00 p.m.', '5:00 p.m.', '6:00 p.m.', '7:00 p.m.', '8:00 p.m.', '9:00 p.m.', '10:00 p.m.', '11:00 p.m.'];
+    const labels = ['12:00 AM', '1:00 AM', '2:00 AM', '3:00 AM', '4:00 AM', '5:00 AM', '6:00 AM',
+        '7:00 AM', '8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM',
+        '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM', '8:00 PM', '9:00 PM', '10:00 PM', '11:00 PM'];
 
     const data = {
         labels,
         datasets: [
             {
                 label: 'Cyclists',
-                data: props.isLoading ? {} : props.hourlyData.hourlyCyclistTotals,
+                data: props.hourlyData ? props.hourlyData.hourlyCyclistTotals : {},
                 borderColor: '#27AE60',
                 borderWidth: 2,
                 backgroundColor: '#2ECC71',
             },
             {
                 label: 'Pedestrians',
-                data: props.isLoading ? {} : props.hourlyData.hourlyPedestrianTotals,
+                data: props.hourlyData ? props.hourlyData.hourlyPedestrianTotals : {},
                 borderColor: '#2980B9',
                 borderWidth: 2,
                 backgroundColor: '#3498DB',

@@ -94,21 +94,22 @@ const YearlyChart = (props) => {
         },
     };
     //TODO: add 2023
-    const labels = ['2012*(Jul-Dec)', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'];
-
+    const labels = ['2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'];
+    console.log(props.yearlyData ? props.yearlyData.yearlyCyclistTotals : 'hi')
     const data = {
         labels,
         datasets: [
             {
                 label: 'Cyclists',
-                data: props.isLoading ? {} : props.yearlyData.yearlyCyclistTotals,
+                data: props.yearlyData ? props.yearlyData.yearlyCyclistTotals : {},
+
                 borderColor: '#27AE60',
                 borderWidth: 2,
                 backgroundColor: '#2ECC71',
             },
             {
                 label: 'Pedestrians',
-                data: props.isLoading ? {} : props.yearlyData.yearlyPedestrianTotals,
+                data: props.yearlyData ? props.yearlyData.yearlyPedestrianTotals : {},
                 borderColor: '#2980B9',
                 borderWidth: 2,
                 backgroundColor: '#3498DB',
@@ -118,13 +119,8 @@ const YearlyChart = (props) => {
     return (
         <Container>
             <h3 className='text-center'>Yearly Totals</h3>
-            <h4 className='text-center'>The worst year on record
-                for cyclists was <span className='cycle-text'>{worstCyclistYear}</span>,
-                and the worst year for pedestrians was <span className='pedestrian-text'>{worstPedestrianYear}</span>. <br></br>
-                2022 was <span className='cycle-text'>x percent safer</span> than 2021 for cyclists, and <span className='pedestrian-text'>y percent safer</span> for pedestrians. <br></br>
-                Through {currentDateStr}, this year has been <span className='cycle-text'>x percent safer</span> than last year for cyclists, and <span className='pedestrian-text'>y percent safer</span> for pedestrians when compared
-                with the same time period in 2022.
-            </h4>
+            <p className='text-center'>(Note: 2012 data from Jul-Dec only)
+            </p>
             <Bar options={options} data={data} />
             <br></br>
         </Container>

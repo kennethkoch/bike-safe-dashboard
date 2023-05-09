@@ -1,12 +1,12 @@
+import pandas as pd
 from sodapy import Socrata
-import time
-from datetime import datetime
-import reverse_geocoder as rg
-from apscheduler.schedulers.background import BackgroundScheduler
 
+import requests
+from datetime import datetime, timedelta
+from cachetools import cached, TTLCache
 
-records = 500000
-records_dev = 20000
+# Unauthenticated client only works with public data sets. Note 'None'
+# in place of application token, and no username or password:
 client = Socrata("data.cityofnewyork.us", None)
 
 cyclists_injured = "number_of_cyclist_injured>0 OR number_of_cyclist_killed>0"
@@ -17,239 +17,184 @@ pedestrians_injured = (
 # only return crashes where at least one cyclist or pedestrian was injured or killed
 all_records_with_injury = cyclists_injured + " OR " + pedestrians_injured
 
-# initial data upon starting server
-results = client.get("h9gi-nx95", limit=records, where=all_records_with_injury)
+cache = TTLCache(maxsize=1, ttl=86400)
 
-# update results once a day
-def get_data():
+
+# call API and cache results for 24 hours
+@cached(cache)
+def get_api_data():
     print("getting updated data")
-    global results
-    results = client.get("h9gi-nx95", limit=records, where=all_records_with_injury)
+
+    results = client.get("h9gi-nx95", limit=500000, where=all_records_with_injury)
+    results_df = pd.DataFrame.from_records(results)
     print("results updated")
+    return results_df
 
 
-scheduler = BackgroundScheduler()
-job = scheduler.add_job(get_data, "cron", hour=2)  # 2:00 am
-scheduler.start()
+def get_data():
+    results_df = get_api_data()
+    print("get data called")
+    return results_df
 
 
-current_year = datetime.now().year
-cyclists_injured_total = 0
-cyclists_killed_total = 0
-pedestrians_injured_total = 0
-pedestrians_killed_total = 0
-accidents_involving_cyclists = 0
-accidents_involving_pedestrians = 0
-cyclist_year_count = {}
-cyclist_month_count = {}
-cyclist_weekday_count = {}
-cyclist_hour_count = {}
-pedestrian_year_count = {}
-pedestrian_month_count = {}
-pedestrian_weekday_count = {}
-pedestrian_hour_count = {}
-year_to_date_cyclist_injuries = 0
-year_to_date_cyclist_deaths = 0
-year_to_date_pedestrian_injuries = 0
-year_to_date_pedestrian_deaths = 0
-cyclist_borough_count = {
-    "BRONX": 0,
-    "BROOKLYN": 0,
-    "MANHATTAN": 0,
-    "QUEENS": 0,
-    "STATEN ISLAND": 0,
-    "UNKNOWN_OTHER": 0,
-}
-pedestrian_borough_count = {
-    "BRONX": 0,
-    "BROOKLYN": 0,
-    "MANHATTAN": 0,
-    "QUEENS": 0,
-    "STATEN ISLAND": 0,
-    "UNKNOWN_OTHER": 0,
-}
+# pandas DataFrame
+results_df = get_data()
+
+# cyclists and pedestrians dataframes
+cyclist_df = results_df[
+    (results_df["number_of_cyclist_injured"].astype(int) > 0)
+    | (results_df["number_of_cyclist_killed"].astype(int) > 0)
+].copy()
+
+pedestrian_df = results_df[
+    (results_df["number_of_pedestrians_injured"].astype(int) > 0)
+    | (results_df["number_of_pedestrians_killed"].astype(int) > 0)
+].copy()
+
+pd.set_option("display.max_rows", None)
+pd.set_option("display.max_columns", None)
+
+# convert crash_dat to datetime
+cyclist_df["crash_date"] = pd.to_datetime(cyclist_df["crash_date"])
+cyclist_df["crash_time"] = pd.to_datetime(cyclist_df["crash_time"])
+pedestrian_df["crash_date"] = pd.to_datetime(pedestrian_df["crash_date"])
+pedestrian_df["crash_time"] = pd.to_datetime(pedestrian_df["crash_time"])
+
+# calculate yearly totals
+yearly_cyclist_totals = (
+    cyclist_df.groupby(cyclist_df["crash_date"].dt.year)["crash_date"]
+    .agg("count")
+    .to_dict()
+)
+yearly_pedestrian_totals = (
+    pedestrian_df.groupby(pedestrian_df["crash_date"].dt.year)["crash_date"]
+    .agg("count")
+    .to_dict()
+)
+
+sum_cyclist_injuries = results_df["number_of_cyclist_injured"].astype(int).sum()
+sum_cyclist_deaths = results_df["number_of_cyclist_killed"].astype(int).sum()
+sum_pedestrian_injuries = results_df["number_of_pedestrians_injured"].astype(int).sum()
+sum_pedestrian_deaths = results_df["number_of_pedestrians_killed"].astype(int).sum()
+
+# current date
+today = datetime.today()
+date_cutoff = (today - timedelta(days=365)).strftime("%Y-%m-%d")
+
+this_year_df = results_df[
+    (results_df["crash_date"] >= "2023-01-01")
+    & (results_df["crash_date"] < today.strftime("%Y-%m-%d"))
+]
+last_year_df = results_df[
+    (results_df["crash_date"] >= "2022-01-01")
+    & (results_df["crash_date"] < date_cutoff)
+]
+
+sum_this_year_cyclist_injuries = (
+    this_year_df["number_of_cyclist_injured"].astype(int).sum()
+)
+sum_this_year_cyclist_deaths = (
+    this_year_df["number_of_cyclist_killed"].astype(int).sum()
+)
+sum_this_year_pedestrian_injuries = (
+    this_year_df["number_of_pedestrians_injured"].astype(int).sum()
+)
+sum_this_year_pedestrain_deaths = (
+    this_year_df["number_of_pedestrians_killed"].astype(int).sum()
+)
+sum_last_year_cyclist_injuries = (
+    last_year_df["number_of_cyclist_injured"].astype(int).sum()
+)
+sum_last_year_cyclist_deaths = (
+    last_year_df["number_of_cyclist_killed"].astype(int).sum()
+)
+sum_last_year_pedestrian_injuries = (
+    last_year_df["number_of_pedestrians_injured"].astype(int).sum()
+)
+sum_last_year_pedestrian_deaths = (
+    last_year_df["number_of_pedestrians_killed"].astype(int).sum()
+)
+
+# calculate day of week totals
+cyclist_day_counts = cyclist_df["crash_date"].dt.day_name().value_counts().to_dict()
+pedestrian_day_counts = (
+    pedestrian_df["crash_date"].dt.day_name().value_counts().to_dict()
+)
+
+# calculate hour totals
+cyclist_df["hour"] = cyclist_df["crash_time"].dt.hour
+cyclist_hour_counts = cyclist_df["hour"].value_counts().to_dict()
+
+hourly_cyclist_counts = []
+for key in sorted(cyclist_hour_counts.keys()):
+    hourly_cyclist_counts.append({"x": key, "y": cyclist_hour_counts[key]})
+
+pedestrian_df["hour"] = pedestrian_df["crash_time"].dt.hour
+pedestrian_hour_counts = pedestrian_df["hour"].value_counts().to_dict()
+
+hourly_pedestrian_counts = []
+for key in sorted(pedestrian_hour_counts.keys()):
+    hourly_pedestrian_counts.append({"x": key, "y": pedestrian_hour_counts[key]})
 
 
-def translate_borough(borough):
-    if borough == "KINGS COUNTY":
-        borough = "BROOKLYN"
-    elif borough == "NEW YORK COUNTY":
-        borough = "MANHATTAN"
-    elif borough == "QUEENS COUNTY":
-        borough = "QUEENS"
-    elif borough == "RICHMOND COUNTY":
-        borough = "STATEN ISLAND"
-    elif borough == "BRONX":
-        borough = "BRONX"
-    else:
-        borough = "UNKNOWN_OTHER"
-    return borough
+# this function finds how many times a given month has occurred since 2012,
+# and returns the denominator to be used in monthly average calculation
+def find_denominator_month(month):
+    total_months = datetime.today().year - 2013
+    if month >= 7:  # account for the limited data in 2012(jan-july)
+        total_months += 1
+    if datetime.today().month >= month:  # if the month has already occurred this year
+        total_months += 1
+    return total_months
 
 
-def find_denominator_months(n):
-    total = current_year - 2013
-    if n >= 7:  # account for jul-dec 2012
-        total += 1
-    if datetime.now().month > n:  # account for months that have passed this year
-        total += 1
-    return total
-
-
+# this function calculates the monthly average for a given count
 def calculate_monthly_average(count):
-    averages_arr = []
+    averages = []
     for i in range(1, 13):
-        denominator = find_denominator_months(i)
-        average = count[i] / denominator
-        averages_arr.append(average)
-    return averages_arr
+        averages.append(round(count[i] / find_denominator_month(i)))
+    return averages
 
 
-def update_count_dict(key, dict):
-    if key in dict:
-        dict[key] += 1
-    else:
-        dict[key] = 1
+months = range(1, 13)  # All 12 months
+cyclist_monthly_totals = {month: 0 for month in months}
+pedestrian_monthly_totals = {month: 0 for month in months}
 
+for value in cyclist_df["crash_date"]:
+    cyclist_monthly_totals[value.month] += 1
+for value in pedestrian_df["crash_date"]:
+    pedestrian_monthly_totals[value.month] += 1
 
-def count_to_array(count):
-    return list(dict(sorted(count.items())).values())
+# calculate monthly averages
+cyclist_monthly_average = calculate_monthly_average(cyclist_monthly_totals)
+pedestrian_monthly_average = calculate_monthly_average(pedestrian_monthly_totals)
 
-
-no_crash_time = 0
-for crash in results:
-    # accidents involving cyclists
-    if (
-        int(crash["number_of_cyclist_injured"]) > 0
-        or int(crash["number_of_cyclist_killed"]) > 0
-    ):
-        accidents_involving_cyclists += 1
-        cyclists_injured_total += int(crash["number_of_cyclist_injured"])
-        cyclists_killed_total += int(crash["number_of_cyclist_killed"])
-
-        # update ytd totals
-        if int(crash["crash_date"][0:4]) == current_year:
-            year_to_date_cyclist_injuries += int(crash["number_of_cyclist_injured"])
-            year_to_date_cyclist_deaths += int(crash["number_of_cyclist_killed"])
-
-        # update borough count
-        if "borough" in crash:
-            cyclist_borough_count[crash["borough"]] += 1
-        else:
-            try:
-                coordinates = crash["latitude"], crash["longitude"]
-                result = rg.search(coordinates, mode=1)  # derive borough from lat/lon
-                borough = result[0]["admin2"].upper()
-                updated_borough = translate_borough(borough)
-                update_count_dict(updated_borough, cyclist_borough_count)
-
-            except:
-                update_count_dict("UNKNOWN_OTHER", cyclist_borough_count)
-
-        # update yearly, monthly, weekly counts
-        try:
-            year = datetime.fromisoformat(crash["crash_date"]).year
-            month = datetime.fromisoformat(crash["crash_date"]).month
-            weekday = datetime.fromisoformat(crash["crash_date"]).weekday()
-            update_count_dict(year, cyclist_year_count)
-            update_count_dict(month, cyclist_month_count)
-            update_count_dict(weekday, cyclist_weekday_count)
-        except:
-            print("invalid date attribute")
-        # update hourly count
-        try:
-            hour = datetime.strptime(crash["crash_time"], "%H:%M").hour
-            update_count_dict(hour, cyclist_hour_count)
-        except:
-            print("invalid time")
-
-    # accidents involving pedestrians
-    if (
-        int(crash["number_of_pedestrians_injured"]) > 0
-        or int(crash["number_of_pedestrians_killed"]) > 0
-    ):
-        accidents_involving_pedestrians += 1
-        pedestrians_injured_total += int(crash["number_of_pedestrians_injured"])
-        pedestrians_killed_total += int(crash["number_of_pedestrians_killed"])
-
-        # update ytd totals
-        if int(crash["crash_date"][0:4]) == current_year:
-            year_to_date_pedestrian_injuries += int(
-                crash["number_of_pedestrians_injured"]
-            )
-            year_to_date_pedestrian_deaths += int(crash["number_of_pedestrians_killed"])
-
-        # update borough count
-        if "borough" in crash:
-            pedestrian_borough_count[crash["borough"]] += 1
-        else:
-            try:
-                coordinates = crash["latitude"], crash["longitude"]
-                result = rg.search(coordinates, mode=1)  # derive borough from lat/lon
-                borough = result[0]["admin2"].upper()
-                updated_borough = translate_borough(borough)
-                update_count_dict(updated_borough, pedestrian_borough_count)
-
-            except:
-                update_count_dict("UNKNOWN_OTHER", pedestrian_borough_count)
-
-        # update yearly, monthly, weekly counts
-        try:
-            year = datetime.fromisoformat(crash["crash_date"]).year
-            month = datetime.fromisoformat(crash["crash_date"]).month
-            weekday = datetime.fromisoformat(crash["crash_date"]).weekday()
-            update_count_dict(year, pedestrian_year_count)
-            update_count_dict(month, pedestrian_month_count)
-            update_count_dict(weekday, pedestrian_weekday_count)
-        except:
-            print("no crash date attribute")
-
-        # update hourly counts
-        try:
-            hour = datetime.strptime(crash["crash_time"], "%H:%M").hour
-            update_count_dict(hour, pedestrian_hour_count)
-        except:
-            print("invalid time")
-
-yearly_cyclist_totals = count_to_array(cyclist_year_count)
-yearly_pedestrian_totals = count_to_array(pedestrian_year_count)
-
-weekly_cyclist_totals = count_to_array(cyclist_weekday_count)
-weekly_pedestrian_totals = count_to_array(pedestrian_weekday_count)
-
-hourly_cyclist_totals = count_to_array(cyclist_hour_count)
-hourly_pedestrian_totals = count_to_array(pedestrian_hour_count)
-
-cyclist_borough_totals = count_to_array(cyclist_borough_count)
-pedestrian_borough_totals = count_to_array(pedestrian_borough_count)
-
-monthly_cyclist_averages = calculate_monthly_average(cyclist_month_count)
-monthly_pedestrian_averages = calculate_monthly_average(pedestrian_month_count)
-
-data = {
+# object to be returned
+data_object = {
     "counterData": {
-        "ytdCyclistInjuries": year_to_date_cyclist_injuries,
-        "ytdCyclistDeaths": year_to_date_cyclist_deaths,
-        "ytdPedestrianInjuries": year_to_date_pedestrian_injuries,
-        "ytdPedestrianDeaths": year_to_date_pedestrian_deaths,
+        "ytdCyclistInjuries": str(sum_this_year_cyclist_injuries),
+        "ytdCyclistDeaths": str(sum_this_year_cyclist_deaths),
+        "ytdPedestrianInjuries": str(sum_this_year_pedestrian_injuries),
+        "ytdPedestrianDeaths": str(sum_this_year_pedestrain_deaths),
+        "lastYtdCyclistInjuries": str(sum_last_year_cyclist_injuries),
+        "lastYtdCyclistDeaths": str(sum_last_year_cyclist_deaths),
+        "lastYtdPedestrianInjuries": str(sum_last_year_pedestrian_injuries),
+        "lastYtdPedestrianDeaths": str(sum_last_year_pedestrian_deaths),
     },
     "yearlyData": {
         "yearlyCyclistTotals": yearly_cyclist_totals,
         "yearlyPedestrianTotals": yearly_pedestrian_totals,
     },
-    "boroughData": {
-        "cyclistBoroughTotals": cyclist_borough_totals,
-        "pedestrianBoroughTotals": pedestrian_borough_totals,
-    },
-    "monthlyData": {
-        "monthlyCyclistAverages": monthly_cyclist_averages,
-        "monthlyPedestrianAverages": monthly_pedestrian_averages,
-    },
-    "weeklyData": {
-        "weeklyCyclistTotals": weekly_cyclist_totals,
-        "weeklyPedestrianTotals": weekly_pedestrian_totals,
+    "weekDayData": {
+        "cyclistDayCounts": cyclist_day_counts,
+        "pedestrianDayCounts": pedestrian_day_counts,
     },
     "hourlyData": {
-        "hourlyCyclistTotals": hourly_cyclist_totals,
-        "hourlyPedestrianTotals": hourly_pedestrian_totals,
+        "hourlyCyclistTotals": hourly_cyclist_counts,
+        "hourlyPedestrianTotals": hourly_pedestrian_counts,
+    },
+    "monthlyData": {
+        "monthlyCyclistAverages": cyclist_monthly_average,
+        "monthlyPedestrianAverages": pedestrian_monthly_average,
     },
 }

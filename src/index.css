@@ -81,6 +81,13 @@ div.card-body {
   color: #c0d2fc;
 }
 
+.percent-text {
+  color: #bdbdbd;
+  font-weight: 500;
+  font-size: .7em;
+  font-style: italic;
+}
+
 .nav-link {
   /* color: #B2DFDB !important; */
   font-size: 1.4em;
