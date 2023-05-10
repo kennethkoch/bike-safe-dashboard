@@ -27,10 +27,6 @@ ChartJS.register(
 );
 
 const MonthlyChart = (props) => {
-    const worstCyclistMonth = (props.monthlyData) ? props.monthlyData.worstCyclistMonth : 'N/A';
-    const worstPedestrianMonth = (props.monthlyData) ? props.monthlyData.worstPedestrianMonth : 'N/A';
-    console.log(props.monthlyData ? typeof (props.monthlyData.monthlyCyclistAverages[0]) : 'N/A')
-    const test_data = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     const options = {
         plugins: {
             legend: {
@@ -122,12 +118,11 @@ const MonthlyChart = (props) => {
 
     return (
         <Container>
-            <h3 className='text-center'>Average Monthly Accidents</h3>
-            <h4 className='text-center'>The most dangerous month for cyclists has historically
-                been <span className='cycle-text'>{worstCyclistMonth}</span>, <br></br>while the most dangerous month for pedestrians has
-                been <span className='pedestrian-text'>{worstPedestrianMonth}.</span></h4>
-            <Line options={options} data={data} />
-            <br></br>
+            <div id="monthlyChart">
+                <h3 className='text-center'>Average Monthly Accidents</h3>
+                <Line options={options} data={data} />
+                <br></br>
+            </div>
         </Container>
     )
 }

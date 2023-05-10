@@ -1,6 +1,20 @@
-// import Navbar from 'react-bootstrap/Navbar'
-// import Container from 'react-bootstrap/Container'
 import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import { Link } from 'react-scroll'
+
+const ScrollLink = ({ to, children }) => (
+    <Link
+        to={to}
+        smooth={true}
+        duration={500}
+        offset={-50}
+        spy={true}
+        exact="true"
+        onClick={() => console.log("Link clicked")}
+    >
+        {children}
+    </Link>
+);
+
 function Navigation() {
     return (
         <Navbar bg='dark' variant='dark' className='sticky-top' expand="lg"  >
@@ -9,13 +23,25 @@ function Navigation() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
                     <Nav className="ml-auto">
-                        <Nav.Link href="#">Map</Nav.Link>
                         <NavDropdown bg='dark' menuVariant='dark' title="Statistics" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="#">Yearly</NavDropdown.Item>
-                            <NavDropdown.Item href="#">Monthly</NavDropdown.Item>
-                            <NavDropdown.Item href="#">Daily</NavDropdown.Item>
-                            <NavDropdown.Item href="#">Hourly</NavDropdown.Item>
-                            <NavDropdown.Item href="#">Borough</NavDropdown.Item>
+                            <ScrollLink to="yearlyChart">
+                                <NavDropdown.Item>Yearly</NavDropdown.Item>
+                            </ScrollLink>
+
+                            <ScrollLink to="monthlyChart">
+                                <NavDropdown.Item>Monthly</NavDropdown.Item>
+                            </ScrollLink>
+
+
+                            <ScrollLink to="dailyChart">
+                                <NavDropdown.Item>Daily</NavDropdown.Item>
+                            </ScrollLink>
+
+
+                            <ScrollLink to="hourChart">
+                                <NavDropdown.Item>Hourly</NavDropdown.Item>
+                            </ScrollLink>
+
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>

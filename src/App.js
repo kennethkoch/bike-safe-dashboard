@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react';
 import Navbar from './navbar'
 import Counters from './Counters'
-import BoroughChart from './BoroughChart'
 import WeekdayChart from './WeekdayChart'
 import YearlyChart from './YearlyChart'
 import MonthlyChart from './MonthlyChart'
@@ -52,7 +51,6 @@ function App() {
       <MonthlyChart monthlyData={data.monthlyData} />
       <WeekdayChart weekDayData={data.weekDayData} />
       <HourChart hourlyData={data.hourlyData} />
-      <BoroughChart boroughData={data.boroughData} />
       <Footer />
     </div>
   );

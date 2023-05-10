@@ -25,8 +25,6 @@ const YearlyChart = (props) => {
     const currentDate = new Date()
     const currentDateStr = new Date().toLocaleDateString()
     const currentYear = currentDate.getFullYear();
-    const worstCyclistYear = (props.yearlyData) ? props.yearlyData.worstCyclistYear : 'N/A';
-    const worstPedestrianYear = (props.yearlyData) ? props.yearlyData.worstPedestrianYear : 'N/A';
     const options = {
         responsive: true,
         scales: {
@@ -93,7 +91,6 @@ const YearlyChart = (props) => {
             },
         },
     };
-    //TODO: add 2023
     const labels = ['2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'];
     console.log(props.yearlyData ? props.yearlyData.yearlyCyclistTotals : 'hi')
     const data = {
@@ -118,11 +115,14 @@ const YearlyChart = (props) => {
     };
     return (
         <Container>
-            <h3 className='text-center'>Yearly Totals</h3>
+            <div id='yearlyChart'>
+                <h3 className='text-center'>Yearly Totals</h3>
+            </div>
             <p className='text-center'>(Note: 2012 data from Jul-Dec only)
             </p>
             <Bar options={options} data={data} />
             <br></br>
+
         </Container>
     )
 }
