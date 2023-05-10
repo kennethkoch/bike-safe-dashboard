@@ -119,12 +119,10 @@ const HourChart = (props) => {
 
     return (
         <Container>
-            <h3 className='text-center'>Accidents by Hour</h3>
-            <h4 className='text-center'>
-                The most dangerous time of day for cyclists is <span className='cycle-text'>{worstCyclistTime}</span>, <br></br>
-                and the most dangerous time of day for pedestrians is <span className='pedestrian-text'>{worstPedestrianTime}</span>.
-            </h4>
-            <Line options={options} data={data} />;
+            <div id='hourChart'>
+                <h3 className='text-center'>Accidents by Hour</h3>
+                <Line options={options} data={data} />;
+            </div>
         </Container>
     )
 }
