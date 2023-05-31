@@ -17,7 +17,7 @@ function App() {
   useEffect(() => {
     console.log('hello from app')
     async function fetchData() {
-      const response = await fetch('https://bike-safe-dashboard.herokuapp.com/data')
+      const response = await fetch('https://bike-safe-api.herokuapp.com/data')
       console.log('response', response)
       const jsonData = await response.json()
       console.log('jsonData', jsonData)
