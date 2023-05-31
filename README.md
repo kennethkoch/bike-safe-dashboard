@@ -5,5 +5,5 @@ This is a data visualization project created to explore trends in cyclist and pe
 
 ## Data
 
-Data used in this project provided by [NYC Open Data](https://opendata.cityofnewyork.us/)
+Data used in this project provided by [NYC Open Data](https://opendata.cityofnewyork.us/)  
 Check out the backend code for this project [here](https://github.com/kennethkoch/bikesafe-dashboard-api)
