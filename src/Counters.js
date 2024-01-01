@@ -23,7 +23,7 @@ const Counters = (props) => {
         console.log(percentDifference(props.counterData.ytdCyclistInjuries, props.counterData.lastYtdCyclistInjuries))
     }
 
-    const cylcistInjuryChange = props.counterData ? percentDifference(props.counterData.ytdCyclistInjuries, props.counterData.lastYtdCyclistInjuries) : 0
+    const cyclistInjuryChange = props.counterData ? percentDifference(props.counterData.ytdCyclistInjuries, props.counterData.lastYtdCyclistInjuries) : 0
     const cyclistDeathChange = props.counterData ? percentDifference(props.counterData.ytdCyclistDeaths, props.counterData.lastYtdCyclistDeaths) : 0
     const pedestrianInjuryChange = props.counterData ? percentDifference(props.counterData.ytdPedestrianInjuries, props.counterData.lastYtdPedestrianInjuries) : 0
     const pedestrianDeathChange = props.counterData ? percentDifference(props.counterData.ytdPedestrianDeaths, props.counterData.lastYtdPedestrianDeaths) : 0
@@ -40,14 +40,14 @@ const Counters = (props) => {
                             <Card.Body>
                                 <Card.Text><strong>Injuries:</strong> {props.counterData ? `${props.counterData.ytdCyclistInjuries} vs. 
                                 ${props.counterData.lastYtdCyclistInjuries} ` : 0}
-                                    <span className='percent-text'>({cylcistInjuryChange})</span>
+                                    <span className='percent-text'>{!isNaN(cyclistInjuryChange) && cyclistInjuryChange}</span>
 
                                 </Card.Text>
 
                                 <Card.Text>
                                     <strong>Deaths:</strong> {props.counterData ? `${props.counterData.ytdCyclistDeaths} vs. 
                                     ${props.counterData.lastYtdCyclistDeaths} ` : 0}
-                                    <span className='percent-text'>({cyclistDeathChange})</span>
+                                    <span className='percent-text'>{!isNaN(cyclistDeathChange) && cyclistDeathChange}</span>
                                 </Card.Text>
                             </Card.Body>
                         </Card>
@@ -57,12 +57,12 @@ const Counters = (props) => {
                             <Card.Body>
                                 <Card.Text><strong>Injuries:</strong> {props.counterData ? `${props.counterData.ytdPedestrianInjuries} vs. 
                                 ${props.counterData.lastYtdPedestrianInjuries} ` : 0}
-                                    <span className='percent-text'>({pedestrianInjuryChange})</span>
+                                    <span className='percent-text'>{!isNaN(pedestrianInjuryChange) && pedestrianInjuryChange}</span>
                                 </Card.Text>
                                 <Card.Text>
                                     <strong>Deaths:</strong> {props.counterData ? `${props.counterData.ytdPedestrianDeaths} vs. 
                                     ${props.counterData.lastYtdPedestrianDeaths} ` : 0}
-                                    <span className='percent-text'>({pedestrianDeathChange})</span>
+                                    <span className='percent-text'>{!isNaN(pedestrianDeathChange) && pedestrianDeathChange}</span>
                                 </Card.Text>
                             </Card.Body>
                         </Card>
