@@ -1,4 +1,3 @@
-// import './App.css';
 import { useEffect, useState } from 'react';
 import Navbar from './navbar'
 import Counters from './Counters'
@@ -11,7 +10,6 @@ import Footer from './Footer'
 
 function App() {
 
-  // const [isLoading, setIsLoading] = useState(true)
   const url = process.env.REACT_APP_API_URL
   console.log(process.env)
   const [data, setData] = useState([])
@@ -24,26 +22,11 @@ function App() {
       const jsonData = await response.json()
       console.log('jsonData', jsonData)
       setData(jsonData)
-      // setIsLoading(false)
     }
-    console.log('fetching data')
     fetchData()
-    // fetch('/data')
-    //   .then(response => response.json())
-
-    //   .then((response) => {
-    //     console.log('response', response)
-    //     console.log('here')
-    //     setData(response)
-    //     setIsLoading(false)
-    //   }
-    //   )
-    //   .catch(error => console.log(error))
-    console.log('data', data)
 
   }, [])
 
-  // console.log('data', data.counterData.ytdCyclistInjuries)
 
   return (
     <div>
