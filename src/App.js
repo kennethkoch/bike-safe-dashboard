@@ -12,12 +12,14 @@ import Footer from './Footer'
 function App() {
 
   // const [isLoading, setIsLoading] = useState(true)
+  const url = process.env.REACT_APP_API_URL
+  console.log(process.env)
   const [data, setData] = useState([])
 
   useEffect(() => {
     console.log('hello from app')
     async function fetchData() {
-      const response = await fetch('http://localhost:8000/data')
+      const response = await fetch(url)
       console.log('response', response)
       const jsonData = await response.json()
       console.log('jsonData', jsonData)
