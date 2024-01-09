@@ -40,14 +40,14 @@ const Counters = (props) => {
                             <Card.Body>
                                 <Card.Text><strong>Injuries:</strong> {props.counterData ? `${props.counterData.ytdCyclistInjuries} vs. 
                                 ${props.counterData.lastYtdCyclistInjuries} ` : 0}
-                                    <span className='percent-text'> {!isNaN(cyclistInjuryChange) && cyclistInjuryChange}</span>
+                                    <span className='percent-text'> ({cyclistInjuryChange})</span>
 
                                 </Card.Text>
 
                                 <Card.Text>
                                     <strong>Deaths:</strong> {props.counterData ? `${props.counterData.ytdCyclistDeaths} vs. 
                                     ${props.counterData.lastYtdCyclistDeaths} ` : 0}
-                                    <span className='percent-text'> {!isNaN(cyclistDeathChange) && cyclistDeathChange}</span>
+                                    <span className='percent-text'> ({cyclistDeathChange})</span>
                                 </Card.Text>
                             </Card.Body>
                         </Card>
@@ -57,12 +57,12 @@ const Counters = (props) => {
                             <Card.Body>
                                 <Card.Text><strong>Injuries:</strong> {props.counterData ? `${props.counterData.ytdPedestrianInjuries} vs. 
                                 ${props.counterData.lastYtdPedestrianInjuries} ` : 0}
-                                    <span className='percent-text'> {!isNaN(pedestrianInjuryChange) && pedestrianInjuryChange}</span>
+                                    <span className='percent-text'> ({pedestrianInjuryChange})</span>
                                 </Card.Text>
                                 <Card.Text>
                                     <strong>Deaths:</strong> {props.counterData ? `${props.counterData.ytdPedestrianDeaths} vs. 
                                     ${props.counterData.lastYtdPedestrianDeaths} ` : 0}
-                                    <span className='percent-text'> {!isNaN(pedestrianDeathChange) && pedestrianDeathChange}</span>
+                                    <span className='percent-text'> ({pedestrianDeathChange})</span>
                                 </Card.Text>
                             </Card.Body>
                         </Card>
